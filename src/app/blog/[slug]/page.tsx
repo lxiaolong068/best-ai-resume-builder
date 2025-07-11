@@ -7,6 +7,8 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
+export const dynamic = 'force-dynamic'
+
 // Generate static params for all published blog posts
 export async function generateStaticParams() {
   const posts = await prisma.blogPost.findMany({

@@ -7,6 +7,8 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
+export const dynamic = 'force-dynamic'
+
 // Generate static params for all tools
 export async function generateStaticParams() {
   const tools = await prisma.aiTool.findMany({

@@ -4,6 +4,8 @@ import { FeaturedTools } from '@/components/FeaturedTools'
 import { TestingMethodology } from '@/components/TestingMethodology'
 import { FAQ } from '@/components/FAQ'
 
+export const dynamic = 'force-dynamic'
+
 // Generate JSON-LD structured data for the homepage
 const jsonLd = {
   '@context': 'https://schema.org',

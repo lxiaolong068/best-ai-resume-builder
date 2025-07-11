@@ -40,6 +40,8 @@ export const metadata: Metadata = {
 }
 
 // Generate JSON-LD structured data for the ATS analyzer tool
+export const dynamic = 'force-dynamic'
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',

@@ -39,6 +39,8 @@ export const metadata: Metadata = {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 // Generate JSON-LD structured data for the blog page
 const jsonLd = {
   '@context': 'https://schema.org',
