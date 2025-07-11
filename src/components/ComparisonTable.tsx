@@ -149,8 +149,19 @@ export function ComparisonTable() {
     })
   }
 
+  // Early return if tools is not properly initialized
+  if (!Array.isArray(tools)) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center">
+          <p className="text-gray-600">Loading AI resume builders...</p>
+        </div>
+      </div>
+    )
+  }
+
   // Filter and sort tools
-  const filteredTools = (tools || []).filter(tool => {
+  const filteredTools = tools.filter(tool => {
     const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()))
     const matchesATS = filterATS === null || (tool.features && tool.features.atsOptimized === filterATS)
@@ -162,8 +173,8 @@ export function ComparisonTable() {
 
     switch (sortBy) {
       case 'rating':
-        aValue = parseFloat(a.rating) || 0
-        bValue = parseFloat(b.rating) || 0
+        aValue = a.rating ?? 0
+        bValue = b.rating ?? 0
         break
       case 'name':
         aValue = a.name.toLowerCase()
