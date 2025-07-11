@@ -150,7 +150,7 @@ export function ComparisonTable() {
   }
 
   // Filter and sort tools
-  const filteredTools = tools.filter(tool => {
+  const filteredTools = (tools || []).filter(tool => {
     const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()))
     const matchesATS = filterATS === null || (tool.features && tool.features.atsOptimized === filterATS)
