@@ -4,10 +4,11 @@ import { prisma } from '@/lib/prisma'
 // GET /api/blog/[id] - Get a specific blog post by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const resolvedParams = await params; // Await the params promise
+    const { id } = resolvedParams; // Extract id
     
     const post = await prisma.blogPost.findUnique({
       where: { id }
@@ -37,10 +38,11 @@ export async function GET(
 // PUT /api/blog/[id] - Update a specific blog post (Admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const resolvedParams = await params; // Await the params promise
+    const { id } = resolvedParams; // Extract id
     const body = await request.json()
     
     // Check if post exists
@@ -104,10 +106,11 @@ export async function PUT(
 // DELETE /api/blog/[id] - Delete a specific blog post (Admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const resolvedParams = await params; // Await the params promise
+    const { id } = resolvedParams; // Extract id
     
     // Check if post exists
     const existingPost = await prisma.blogPost.findUnique({
