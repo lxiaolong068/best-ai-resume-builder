@@ -1,19 +1,19 @@
-import { DefaultSeoProps } from 'next-seo'
+import { Metadata } from 'next'
 
-export const defaultSEO: DefaultSeoProps = {
+export const defaultMetadata: Metadata = {
   title: 'Best AI Resume Builder 2025 | ATS-Optimized & Expert Tested',
   description: 'Find the best AI resume builder in 2025. Expert-tested with real ATS scores, pricing comparison, and user reviews. Free tools included.',
-  canonical: 'https://your-domain.com',
+  metadataBase: new URL('https://your-domain.com'),
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://your-domain.com',
-    site_name: 'Best AI Resume Builder',
+    siteName: 'Best AI Resume Builder',
     title: 'Best AI Resume Builder 2025 | ATS-Optimized & Expert Tested',
     description: 'Find the best AI resume builder in 2025. Expert-tested with real ATS scores, pricing comparison, and user reviews.',
     images: [
       {
-        url: 'https://your-domain.com/og-image.jpg',
+        url: '/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Best AI Resume Builder 2025',
@@ -21,70 +21,43 @@ export const defaultSEO: DefaultSeoProps = {
     ],
   },
   twitter: {
-    handle: '@airesumenews',
+    creator: '@airesumenews',
     site: '@airesumenews',
-    cardType: 'summary_large_image',
+    card: 'summary_large_image',
   },
-  additionalMetaTags: [
-    {
-      name: 'keywords',
-      content: 'AI resume builder, best resume builder 2025, ATS optimized, resume generator, AI resume tools, automated resume, resume maker',
-    },
-    {
-      name: 'author',
-      content: 'Best AI Resume Builder Team',
-    },
-    {
-      name: 'robots',
-      content: 'index,follow',
-    },
-    {
-      name: 'googlebot',
-      content: 'index,follow',
-    },
-    {
-      property: 'og:type',
-      content: 'website',
-    },
-  ],
-  additionalLinkTags: [
-    {
-      rel: 'icon',
-      href: '/favicon.ico',
-    },
-    {
-      rel: 'apple-touch-icon',
-      href: '/apple-touch-icon.png',
-      sizes: '180x180',
-    },
-    {
-      rel: 'manifest',
-      href: '/manifest.json',
-    },
-  ],
+  keywords: 'AI resume builder, best resume builder 2025, ATS optimized, resume generator, AI resume tools, automated resume, resume maker',
+  authors: [{ name: 'Best AI Resume Builder Team' }],
+  robots: 'index,follow',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/manifest.json',
 }
 
-export const generateToolSEO = (toolName: string, rating: number, atsScore: number, price: string) => ({
+export const generateToolMetadata = (toolName: string, rating: number, atsScore: number, price: string): Metadata => ({
   title: `${toolName} Review 2025: ATS Score ${atsScore}/100, Pricing & Real User Tests`,
   description: `${toolName} review 2025: ATS score ${atsScore}/100, pricing from ${price}, tested by experts. See real before/after examples and user feedback.`,
-  canonical: `https://your-domain.com/reviews/${toolName.toLowerCase().replace(/\s+/g, '-')}`,
+  alternates: {
+    canonical: `/reviews/${toolName.toLowerCase().replace(/\s+/g, '-')}`,
+  },
   openGraph: {
     title: `${toolName} Review 2025 | Expert Analysis & ATS Test Results`,
     description: `Comprehensive ${toolName} review with real ATS testing. Rating: ${rating}/5, ATS Score: ${atsScore}/100, Price: ${price}`,
     type: 'article',
-    article: {
-      publishedTime: new Date().toISOString(),
-      modifiedTime: new Date().toISOString(),
-      authors: ['Expert Resume Team'],
-      tags: ['AI Resume Builder', toolName, 'ATS Testing', 'Resume Tools'],
-    },
+    publishedTime: new Date().toISOString(),
+    modifiedTime: new Date().toISOString(),
+    authors: ['Expert Resume Team'],
+    tags: ['AI Resume Builder', toolName, 'ATS Testing', 'Resume Tools'],
   },
 })
 
-export const generateComparisonSEO = (tools: string[]) => ({
+export const generateComparisonMetadata = (tools: string[]): Metadata => ({
   title: `${tools.join(' vs ')} Comparison 2025 | Side-by-Side Analysis`,
   description: `Compare ${tools.join(', ')} side-by-side with real ATS scores, pricing, features, and expert analysis. Find the best AI resume builder for your needs.`,
-  canonical: `https://your-domain.com/compare/${tools.join('-vs-').toLowerCase()}`,
+  alternates: {
+    canonical: `/compare/${tools.join('-vs-').toLowerCase()}`,
+  },
   openGraph: {
     title: `${tools.join(' vs ')} Comparison 2025`,
     description: `Detailed comparison of ${tools.join(', ')} with ATS testing results and expert recommendations.`,
