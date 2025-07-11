@@ -27,9 +27,6 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
 
-  // Build optimizations
-  swcMinify: true,
-
   // Headers for better caching and security
   async headers() {
     return [

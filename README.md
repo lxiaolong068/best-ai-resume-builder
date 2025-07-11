@@ -1,38 +1,38 @@
-# Best AI Resume Builder 2025
+# 最佳 AI 简历生成器 2025
 
-A comprehensive AI resume builder evaluation and comparison platform built with Next.js 14, featuring real ATS testing results and expert analysis.
+一个全面的AI简历生成器评估和比较平台，使用Next.js 14构建，包含真实的ATS测试结果和专家分析。
 
-## 🚀 Features
+## 🚀 功能
 
-- **Interactive Comparison Table**: Side-by-side comparison of AI resume builders
-- **Real ATS Testing**: Compatibility scores across 50+ ATS systems
-- **Expert Reviews**: Detailed analysis of features, pricing, and performance
-- **SEO Optimized**: Built for search engine visibility with structured data
-- **Responsive Design**: Optimized for all devices
-- **Performance Focused**: Fast loading with Core Web Vitals optimization
+- **互动比较表**：AI简历生成器的并排比较
+- **真实ATS测试**：跨越50+ ATS系统的兼容性分数
+- **专家评论**：功能、定价和性能的详细分析
+- **SEO优化**：使用结构化数据优化搜索引擎可见性
+- **响应式设计**：针对所有设备优化
+- **性能优先**：快速加载，优化核心Web Vitals
 
-## 🛠️ Tech Stack
+## 🛠️ 技术栈
 
-- **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Database**: PostgreSQL with Prisma ORM
-- **Animation**: Framer Motion
-- **SEO**: next-seo with structured data
-- **Icons**: Heroicons
-- **Deployment**: Vercel
+- **框架**：Next.js 14，使用App Router
+- **语言**：TypeScript
+- **样式**：Tailwind CSS
+- **数据库**：PostgreSQL，使用Prisma ORM
+- **动画**：Framer Motion
+- **SEO**：next-seo，使用结构化数据
+- **图标**：Heroicons
+- **部署**：Vercel
 
-## 📊 Project Structure
+## 📊 项目结构
 
 ```
 ├── src/
-│   ├── app/                 # Next.js App Router pages
-│   ├── components/          # React components
-│   ├── lib/                 # Utility functions and configurations
-│   └── generated/           # Generated Prisma client
-├── prisma/                  # Database schema and migrations
-├── public/                  # Static assets
-└── docs/                    # Project documentation
+│   ├── app/                 # Next.js App Router 页面
+│   ├── components/          # React 组件
+│   ├── lib/                 # 实用函数和配置
+│   └── generated/           # 生成的Prisma客户端
+├── prisma/                  # 数据库模式和迁移
+├── public/                  # 静态资源
+└── docs/                    # 项目文档
 ```
 
 ## 🚀 快速开始

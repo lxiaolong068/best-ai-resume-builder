@@ -48,7 +48,14 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   // Create success response with pagination
   const successResponse = createSuccessResponse(
     result.tools,
-    result.pagination
+    {
+      page: result.pagination.currentPage, // Adjusted to match type
+      limit: result.pagination.limit,
+      total: result.pagination.totalCount,
+      totalPages: result.pagination.totalPages,
+      hasNextPage: result.pagination.hasNextPage,
+      hasPrevPage: result.pagination.hasPrevPage
+    }
   )
 
   // Create API response with cache headers
@@ -65,46 +72,41 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
 
 // POST /api/tools - Create a new AI tool (Admin only)
 export const POST = withErrorHandler(async (request: NextRequest) => {
-  const body = await request.json()
+  try {
+    const body = await request.json()
 
-  // Validate input using Zod schema
-  const validation = validateRequest(toolSchema, body)
-  if (!validation.success) {
-    return createValidationError(validation.error)
-  }
+    // Validate input using Zod schema
+    const validation = validateRequest(toolSchema, body)
+    if (!validation.success) {
+      return createValidationError(validation.error)
+    }
 
-    const { name, description, websiteUrl, pricingModel, features, affiliateLink, logoUrl, rating } = validation.data
-    
-    // Create new tool
-    const tool = await prisma.aiTool.create({
-      data: {
-        name,
-        description,
-        websiteUrl,
-        pricingModel,
-        features: features || {},
-        affiliateLink,
-        logoUrl,
-        rating
-      },
-      include: {
-        reviews: true
-      }
-    })
-    
+      const { name, description, websiteUrl, pricingModel, features, affiliateLink, logoUrl, rating } = validation.data
+      
+      // Create new tool
+      const tool = await prisma.aiTool.create({
+        data: {
+          name,
+          description,
+          websiteUrl,
+          pricingModel,
+          features: features || {},
+          affiliateLink,
+          logoUrl,
+          rating
+        },
+        include: {
+          reviews: true
+        }
+      })
+      
     // Invalidate cache after creating new tool
     await revalidateToolsCache()
 
-    return NextResponse.json({
-      success: true,
-      data: tool
-    }, { status: 201 })
-
+    // Create success response
+    const successResponse = createSuccessResponse(tool)
+    return createApiResponse(successResponse, 201)
   } catch (error) {
-    console.error('Error creating tool:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to create tool' },
-      { status: 500 }
-    )
+    throw error;
   }
-}
+})
