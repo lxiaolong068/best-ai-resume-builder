@@ -4,7 +4,6 @@ import React, { memo, useCallback, useMemo } from 'react'
 import { FixedSizeList as List } from 'react-window'
 // @ts-ignore
 import InfiniteLoader from 'react-window-infinite-loader'
-import { motion } from 'framer-motion'
 
 interface Tool {
   id: string
@@ -65,12 +64,9 @@ const ToolItem = memo<{
   const canSelect = selectedForComparison.length < 5 || isSelected
 
   return (
-    <motion.div
+    <div
       style={style}
       className="p-4 border-b border-gray-200 hover:bg-gray-50 transition-colors"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.2, delay: index * 0.02 }}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4 flex-1">
@@ -145,7 +141,7 @@ const ToolItem = memo<{
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 })
 

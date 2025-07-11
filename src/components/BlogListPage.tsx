@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { 
   CalendarIcon, 
   ClockIcon, 
@@ -72,10 +71,7 @@ export function BlogListPage({ posts }: Props) {
       {/* Page Header */}
       <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+          <div
           >
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               AI Resume Builder Blog 2025
@@ -98,7 +94,7 @@ export function BlogListPage({ posts }: Props) {
                 <span>Actionable Tips</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -149,11 +145,8 @@ export function BlogListPage({ posts }: Props) {
           {filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post, index) => (
-                <motion.article
+                <article
                   key={post.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
                   className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow overflow-hidden"
                 >
                   {/* Featured Image */}
@@ -233,7 +226,7 @@ export function BlogListPage({ posts }: Props) {
                       Read More →
                     </a>
                   </div>
-                </motion.article>
+                </article>
               ))}
             </div>
           ) : (
@@ -264,10 +257,7 @@ export function BlogListPage({ posts }: Props) {
       {/* Newsletter Signup */}
       <section className="py-16 bg-gradient-to-br from-blue-600 to-indigo-700">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+          <div
           >
             <h2 className="text-3xl font-bold text-white mb-4">
               Stay Updated with AI Resume Trends
@@ -285,7 +275,7 @@ export function BlogListPage({ posts }: Props) {
                 Subscribe
               </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

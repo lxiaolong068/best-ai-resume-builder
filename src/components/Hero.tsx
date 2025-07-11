@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { ChevronDownIcon, StarIcon, CheckCircleIcon } from '@heroicons/react/24/solid'
 
 export function Hero() {
@@ -47,12 +46,7 @@ export function Hero() {
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
-            >
+            <div className="space-y-8">
               {/* Badge */}
               <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
                 <CheckCircleIcon className="w-4 h-4" />
@@ -106,15 +100,10 @@ export function Hero() {
                   <span>Expert Tested</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right Column */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
+            <div className="relative">
               {/* Preview Card */}
               <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
                 <div className="space-y-6">
@@ -136,11 +125,8 @@ export function Hero() {
                       { name: 'Novoresume', score: 82, color: 'bg-yellow-500' },
                       { name: 'Canva', score: 76, color: 'bg-orange-500' },
                     ].map((tool, index) => (
-                      <motion.div
+                      <div
                         key={tool.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.5 + index * 0.1 }}
                         className="flex items-center space-x-4"
                       >
                         <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -156,15 +142,13 @@ export function Hero() {
                             </span>
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${tool.score}%` }}
-                              transition={{ delay: 0.8 + index * 0.1, duration: 0.8 }}
+                            <div
                               className={`h-2 rounded-full ${tool.color}`}
+                              style={{ width: `${tool.score}%` }}
                             />
                           </div>
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                   </div>
 
@@ -176,16 +160,11 @@ export function Hero() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* Stats Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-16 pt-16 border-t border-gray-200"
-          >
+          <div className="mt-16 pt-16 border-t border-gray-200">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {stats.map((stat, index) => (
                 <div key={stat.label} className="text-center">
@@ -196,26 +175,17 @@ export function Hero() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center space-y-2 text-gray-400"
-        >
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="flex flex-col items-center space-y-2 text-gray-400 animate-bounce">
           <span className="text-sm">Scroll to explore</span>
           <ChevronDownIcon className="w-5 h-5" />
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   )
 }

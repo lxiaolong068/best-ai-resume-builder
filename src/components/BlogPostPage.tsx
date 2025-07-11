@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { 
   CalendarIcon, 
   ClockIcon, 
@@ -76,10 +75,7 @@ export function BlogPostPage({ post }: Props) {
       {/* Article Header */}
       <article className="bg-white">
         <div className="max-w-4xl mx-auto px-6 py-12">
-          <motion.header
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+          <header
             className="mb-12"
           >
             {/* Keywords Tags */}
@@ -146,13 +142,10 @@ export function BlogPostPage({ post }: Props) {
                 </button>
               </div>
             </div>
-          </motion.header>
+          </header>
 
           {/* Article Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+          <div
             className="prose prose-lg prose-gray max-w-none"
           >
             {post.content ? (
@@ -168,15 +161,10 @@ export function BlogPostPage({ post }: Props) {
                 </p>
               </div>
             )}
-          </motion.div>
+          </div>
 
           {/* Article Footer */}
-          <motion.footer
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-12 pt-8 border-t border-gray-200"
-          >
+          <footer className="mt-12 pt-8 border-t border-gray-200">
             {/* Tags */}
             {post.keywords && post.keywords.length > 0 && (
               <div className="mb-8">
@@ -210,7 +198,7 @@ export function BlogPostPage({ post }: Props) {
                 <span>Share Article</span>
               </button>
             </div>
-          </motion.footer>
+          </footer>
         </div>
       </article>
 

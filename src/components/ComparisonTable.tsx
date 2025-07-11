@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
 import {
   CheckIcon,
   XMarkIcon,
@@ -244,12 +243,7 @@ export function ComparisonTable() {
     <section id="comparison" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Interactive AI Resume Builder Comparison
           </h2>
@@ -257,7 +251,7 @@ export function ComparisonTable() {
             Compare the top AI resume builders side-by-side with real ATS test scores, 
             pricing, and features. Click to add or remove tools from the comparison.
           </p>
-        </motion.div>
+        </div>
 
         {/* Search and Filters */}
         <div className="mb-8 bg-white rounded-xl p-6 shadow-sm">
@@ -374,12 +368,7 @@ export function ComparisonTable() {
 
         {/* Comparison Table */}
         {selectedToolsData.length > 0 ? (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="bg-white rounded-2xl shadow-xl overflow-hidden"
-          >
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
             {/* Recommendations Summary */}
             {comparisonData?.summary && (
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b">
@@ -718,7 +707,7 @@ export function ComparisonTable() {
               />
             </button>
           </div>
-        </motion.div>
+        </div>
         ) : (
           <div className="bg-white rounded-2xl shadow-xl p-12 text-center">
             <div className="text-gray-400 mb-4">
@@ -735,24 +724,19 @@ export function ComparisonTable() {
 
         {/* Recommendations */}
         {comparisonData?.summary?.recommendations && comparisonData.summary.recommendations.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-12 bg-white rounded-2xl shadow-xl p-8"
-          >
+          <div className="mt-12 bg-white rounded-2xl shadow-xl p-8">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">
               Our Expert Recommendations
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {comparisonData.summary.recommendations.map((rec, index) => (
+              {comparisonData.summary.recommendations.map((rec) => (
                 <div key={rec.toolId} className="bg-gray-50 rounded-lg p-6">
                   <h4 className="font-semibold text-gray-900 mb-2">{rec.toolName}</h4>
                   <p className="text-gray-600 text-sm">{rec.recommendation}</p>
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
     </section>

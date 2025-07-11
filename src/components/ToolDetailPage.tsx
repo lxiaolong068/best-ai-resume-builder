@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { 
   StarIcon, 
   CheckIcon, 
@@ -70,12 +69,7 @@ export function ToolDetailPage({ tool }: Props) {
       {/* Hero Section */}
       <section className="bg-white border-b">
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 lg:grid-cols-3 gap-12"
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Tool Info */}
             <div className="lg:col-span-2">
               <div className="flex items-start space-x-6 mb-8">
@@ -199,19 +193,14 @@ export function ToolDetailPage({ tool }: Props) {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-12"
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Features List */}
             <div className="bg-white rounded-2xl p-8 shadow-sm">
               <h2 className="text-2xl font-bold text-gray-900 mb-8">Key Features</h2>
@@ -324,7 +313,7 @@ export function ToolDetailPage({ tool }: Props) {
                 </div>
               )}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

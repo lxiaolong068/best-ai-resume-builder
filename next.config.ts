@@ -18,10 +18,11 @@ const nextConfig: NextConfig = {
 
   // Performance optimizations
   experimental: {
-    optimizePackageImports: ['@heroicons/react', 'framer-motion'],
+    optimizePackageImports: ['@heroicons/react'],
     optimizeCss: true,
     scrollRestoration: true,
   },
+  transpilePackages: ['@headlessui/react', '@heroicons/react'],
 
   // Compression and headers
   compress: true,

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { FAQStructuredData } from './StructuredData'
 
@@ -61,28 +60,20 @@ export function FAQ() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Frequently Asked Questions
           </h2>
           <p className="text-xl text-gray-600">
             Get answers to the most common questions about AI resume builders
           </p>
-        </motion.div>
+        </div>
 
         {/* FAQ Items */}
         <div className="space-y-4">
           {faqs.map((faq, index) => (
-            <motion.div
+            <div
               key={faq.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.05 }}
               className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden"
             >
               <button
@@ -101,34 +92,21 @@ export function FAQ() {
                 </div>
               </button>
               
-              <AnimatePresence>
-                {openFAQ === faq.id && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="px-8 pb-6">
-                      <p className="text-gray-600 leading-relaxed">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+              {openFAQ === faq.id && (
+                <div className="overflow-hidden">
+                  <div className="px-8 pb-6">
+                    <p className="text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mt-16 p-8 bg-blue-600 rounded-2xl text-white"
-        >
+        <div className="text-center mt-16 p-8 bg-blue-600 rounded-2xl text-white">
           <h3 className="text-2xl font-bold mb-4">
             Still have questions?
           </h3>
@@ -143,7 +121,7 @@ export function FAQ() {
               Read Our Complete Guide
             </button>
           </div>
-        </motion.div>
+        </div>
 
         {/* Schema.org FAQ structured data would go here */}
         <script

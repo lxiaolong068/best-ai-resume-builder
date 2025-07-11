@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { 
   BeakerIcon, 
   ChartBarIcon, 
@@ -69,12 +68,7 @@ export function TestingMethodology() {
     <section id="methodology" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <BeakerIcon className="w-8 h-8 text-blue-600" />
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -85,16 +79,13 @@ export function TestingMethodology() {
             We use rigorous, scientific testing methods to evaluate AI resume builders. 
             Our rankings are based on real data, not opinions or affiliate commissions.
           </p>
-        </motion.div>
+        </div>
 
         {/* Testing Process */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
           {methodologySteps.map((step, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
               className="bg-gray-50 rounded-2xl p-8"
             >
               <div className="flex items-center space-x-4 mb-6">
@@ -112,17 +103,12 @@ export function TestingMethodology() {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Test Results Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-16"
-        >
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white mb-16">
           <div className="text-center mb-8">
             <h3 className="text-2xl font-bold mb-2">Testing Scale</h3>
             <p className="text-blue-100">
@@ -138,15 +124,10 @@ export function TestingMethodology() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* ATS Testing Details */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="grid lg:grid-cols-2 gap-12 items-center"
-        >
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h3 className="text-2xl font-bold text-gray-900">
               ATS Compatibility: The Most Important Factor
@@ -208,15 +189,10 @@ export function TestingMethodology() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Transparency Note */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="bg-yellow-50 border border-yellow-200 rounded-2xl p-8 mt-16"
-        >
+        <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-8 mt-16">
           <div className="flex items-start space-x-4">
             <CheckBadgeIcon className="w-8 h-8 text-yellow-600 flex-shrink-0 mt-1" />
             <div>
@@ -233,7 +209,7 @@ export function TestingMethodology() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

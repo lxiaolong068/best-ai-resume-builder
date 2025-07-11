@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { StarIcon, CheckCircleIcon, TrophyIcon } from '@heroicons/react/24/solid'
 
 const featuredTools = [
@@ -86,12 +85,7 @@ export function FeaturedTools() {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
+        <div className="text-center mb-16">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <TrophyIcon className="w-8 h-8 text-yellow-500" />
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -102,16 +96,13 @@ export function FeaturedTools() {
             Based on our comprehensive testing across 50+ ATS systems, user reviews, 
             and feature analysis. These tools consistently deliver the best results.
           </p>
-        </motion.div>
+        </div>
 
         {/* Featured Tools Grid */}
         <div className="space-y-12">
           {featuredTools.map((tool, index) => (
-            <motion.div
+            <div
               key={tool.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
               className="bg-gray-50 rounded-2xl p-8 lg:p-12"
             >
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
@@ -226,17 +217,12 @@ export function FeaturedTools() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mt-16 p-8 bg-blue-50 rounded-2xl"
-        >
+        <div className="text-center mt-16 p-8 bg-blue-50 rounded-2xl">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
             Can't decide which tool is right for you?
           </h3>
@@ -246,7 +232,7 @@ export function FeaturedTools() {
           <button className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
             Test Your Resume for Free
           </button>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

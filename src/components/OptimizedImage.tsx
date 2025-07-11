@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { useState, useCallback, useMemo } from 'react'
-import { motion } from 'framer-motion'
 
 interface OptimizedImageProps {
   src: string | null | undefined
@@ -145,14 +144,9 @@ export const OptimizedImage: React.FC<OptimizedImageProps> = ({
     <div className={`relative ${fill ? 'w-full h-full' : ''}`}>
       {/* Loading overlay */}
       {isLoading && (
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10"
-          initial={{ opacity: 1 }}
-          animate={{ opacity: isLoading ? 1 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-10">
           <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
-        </motion.div>
+        </div>
       )}
 
       {fill ? (

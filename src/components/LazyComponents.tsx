@@ -1,17 +1,12 @@
 'use client'
 
 import React, { lazy, Suspense } from 'react'
-import { motion } from 'framer-motion'
 
 // Loading component for lazy-loaded components
 const LoadingSpinner = ({ message = 'Loading...' }: { message?: string }) => (
   <div className="flex items-center justify-center p-8">
     <div className="flex items-center space-x-3">
-      <motion.div
-        className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-      />
+      <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
       <span className="text-gray-600">{message}</span>
     </div>
   </div>
