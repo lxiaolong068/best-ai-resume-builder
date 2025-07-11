@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+// import { motion } from 'framer-motion'
 import { 
   DocumentTextIcon,
   ChartBarIcon,
@@ -46,6 +46,8 @@ interface ATSAnalysisResult {
   }
 }
 
+
+
 export function ATSAnalyzerPage() {
   const [resumeText, setResumeText] = useState('')
   const [targetIndustry, setTargetIndustry] = useState('')
@@ -73,6 +75,7 @@ export function ATSAnalyzerPage() {
       setError('Resume text is too short (minimum 50 characters)')
       return
     }
+
 
     setLoading(true)
     setError('')
@@ -115,6 +118,7 @@ export function ATSAnalyzerPage() {
     return sessionId
   }
 
+
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-green-600'
     if (score >= 60) return 'text-yellow-600'
@@ -126,6 +130,7 @@ export function ATSAnalyzerPage() {
     if (score >= 60) return 'bg-yellow-500'
     return 'bg-red-500'
   }
+
 
   const handleShare = async () => {
     if (navigator.share && analysis) {
@@ -143,6 +148,7 @@ export function ATSAnalyzerPage() {
       alert('URL copied to clipboard!')
     }
   }
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -164,11 +170,7 @@ export function ATSAnalyzerPage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <div>
             <div className="inline-flex items-center space-x-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <CheckCircleIcon className="w-4 h-4" />
               <span>100% Free • No Registration Required</span>
@@ -201,7 +203,7 @@ export function ATSAnalyzerPage() {
                 <span>Expert Recommendations</span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -210,12 +212,7 @@ export function ATSAnalyzerPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Input Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="bg-white rounded-2xl shadow-sm p-8"
-            >
+            <div className="bg-white rounded-2xl shadow-sm p-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 Analyze Your Resume
               </h2>
@@ -302,15 +299,10 @@ export function ATSAnalyzerPage() {
                   )}
                 </button>
               </div>
-            </motion.div>
+            </div>
 
             {/* Results */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white rounded-2xl shadow-sm p-8"
-            >
+            <div className="bg-white rounded-2xl shadow-sm p-8">
               {analysis ? (
                 <div className="space-y-8">
                   {/* Overall Score */}
@@ -392,7 +384,7 @@ export function ATSAnalyzerPage() {
                   </p>
                 </div>
               )}
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
