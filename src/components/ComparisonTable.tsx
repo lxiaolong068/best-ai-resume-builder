@@ -84,14 +84,14 @@ export function ComparisonTable() {
 
   // Auto-select top 3 tools when data loads
   useEffect(() => {
-    if (tools.length > 0 && selectedTools.length === 0) {
+    if (tools && tools.length > 0 && selectedTools.length === 0) {
       const topTools = tools
         .sort((a, b) => (b.rating || 0) - (a.rating || 0))
         .slice(0, 3)
         .map(tool => tool.id)
       setSelectedTools(topTools)
     }
-  }, [tools])
+  }, [tools, selectedTools.length])
 
   // Fetch comparison data when selected tools change
   useEffect(() => {
@@ -107,7 +107,7 @@ export function ComparisonTable() {
       const data = await response.json()
 
       if (data.success) {
-        setTools(data.data.tools)
+        setTools(data.data)
       } else {
         setError('Failed to load tools')
       }
@@ -162,16 +162,16 @@ export function ComparisonTable() {
 
     switch (sortBy) {
       case 'rating':
-        aValue = a.rating || 0
-        bValue = b.rating || 0
+        aValue = parseFloat(a.rating) || 0
+        bValue = parseFloat(b.rating) || 0
         break
       case 'name':
         aValue = a.name.toLowerCase()
         bValue = b.name.toLowerCase()
         break
       case 'atsScore':
-        aValue = a.reviews[0]?.atsScore || 0
-        bValue = b.reviews[0]?.atsScore || 0
+        aValue = (a.reviews && a.reviews[0]?.atsScore) || 0
+        bValue = (b.reviews && b.reviews[0]?.atsScore) || 0
         break
       default:
         return 0
@@ -193,7 +193,7 @@ export function ComparisonTable() {
     const csvData = [
       ['Feature', ...selectedToolsData.map(tool => tool.name)],
       ['Rating', ...selectedToolsData.map(tool => tool.rating || 'N/A')],
-      ['ATS Score', ...selectedToolsData.map(tool => tool.reviews[0]?.atsScore || 'N/A')],
+      ['ATS Score', ...selectedToolsData.map(tool => (tool.reviews && tool.reviews[0]?.atsScore) || 'N/A')],
       ['Pricing Model', ...selectedToolsData.map(tool => tool.pricingModel || 'N/A')],
       ['Templates', ...selectedToolsData.map(tool => tool.features?.templates || 'N/A')],
       ['ATS Optimized', ...selectedToolsData.map(tool => tool.features?.atsOptimized ? 'Yes' : 'No')],
@@ -350,7 +350,7 @@ export function ComparisonTable() {
                   <div className="text-sm text-gray-500 flex items-center space-x-2">
                     <StarIcon className="w-4 h-4 text-yellow-400" />
                     <span>{tool.rating || 'N/A'}</span>
-                    {tool.reviews[0]?.atsScore && (
+                    {tool.reviews && tool.reviews[0]?.atsScore && (
                       <>
                         <span>•</span>
                         <span>ATS: {tool.reviews[0].atsScore}/100</span>
@@ -437,7 +437,7 @@ export function ComparisonTable() {
                     <div className="text-sm text-gray-500">Based on 50+ ATS systems</div>
                   </td>
                   {selectedToolsData.map((tool) => {
-                    const atsScore = tool.reviews[0]?.atsScore || 0
+                    const atsScore = (tool.reviews && tool.reviews[0]?.atsScore) || 0
                     return (
                       <td key={tool.id} className="p-6 text-center">
                         <div className="flex flex-col items-center space-y-2">
@@ -534,7 +534,7 @@ export function ComparisonTable() {
                     <div className="text-sm text-gray-500">Generation speed rating</div>
                   </td>
                   {selectedToolsData.map((tool) => {
-                    const speedScore = tool.reviews[0]?.speedScore || 0
+                    const speedScore = (tool.reviews && tool.reviews[0]?.speedScore) || 0
                     return (
                       <td key={tool.id} className="p-6 text-center">
                         <div className="text-lg font-semibold text-gray-900">
@@ -552,7 +552,7 @@ export function ComparisonTable() {
                     <div className="text-sm text-gray-500">User experience rating</div>
                   </td>
                   {selectedToolsData.map((tool) => {
-                    const easeOfUse = tool.reviews[0]?.easeOfUse || 0
+                    const easeOfUse = (tool.reviews && tool.reviews[0]?.easeOfUse) || 0
                     return (
                       <td key={tool.id} className="p-6 text-center">
                         <div className="text-lg font-semibold text-gray-900">
