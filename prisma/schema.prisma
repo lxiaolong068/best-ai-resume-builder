@@ -1,0 +1,108 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AiTool {
+  id               String      @id @default(cuid())
+  name             String
+  description      String?
+  websiteUrl       String?     @map("website_url")
+  pricingModel     String?     @map("pricing_model")
+  features         Json?
+  affiliateLink    String?     @map("affiliate_link")
+  logoUrl          String?     @map("logo_url")
+  rating           Decimal?    @db.Decimal(3, 2)
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+  
+  // Relations
+  reviews          ToolReview[]
+  conversions      Conversion[]
+  
+  @@map("ai_tools")
+}
+
+model ToolReview {
+  id             String    @id @default(cuid())
+  toolId         String    @map("tool_id")
+  speedScore     Int?      @map("speed_score")
+  atsScore       Int?      @map("ats_score")
+  easeOfUse      Int?      @map("ease_of_use")
+  templateCount  Int?      @map("template_count")
+  pricingScore   Int?      @map("pricing_score")
+  overallRating  Decimal?  @db.Decimal(3, 2) @map("overall_rating")
+  reviewDate     DateTime? @map("review_date")
+  reviewerNotes  String?   @map("reviewer_notes")
+  
+  // Relations
+  tool           AiTool    @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  
+  @@map("tool_reviews")
+}
+
+model UserEvent {
+  id         String   @id @default(cuid())
+  sessionId  String   @map("session_id")
+  eventType  String   @map("event_type")
+  eventData  Json?    @map("event_data")
+  pageUrl    String?  @map("page_url")
+  userAgent  String?  @map("user_agent")
+  ipAddress  String?  @map("ip_address")
+  createdAt  DateTime @default(now()) @map("created_at")
+  
+  @@map("user_events")
+}
+
+model Conversion {
+  id                String   @id @default(cuid())
+  sessionId         String   @map("session_id")
+  toolId            String   @map("tool_id")
+  conversionType    String   @map("conversion_type")
+  affiliateClickId  String?  @map("affiliate_click_id")
+  commissionAmount  Decimal? @db.Decimal(10, 2) @map("commission_amount")
+  conversionDate    DateTime @default(now()) @map("conversion_date")
+  
+  // Relations
+  tool              AiTool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  
+  @@map("conversions")
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String?
+  excerpt     String?
+  published   Boolean  @default(false)
+  publishedAt DateTime? @map("published_at")
+  seoTitle    String?  @map("seo_title")
+  seoDescription String? @map("seo_description")
+  keywords    String[]
+  featuredImage String? @map("featured_image")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  @@map("blog_posts")
+}
+
+model EmailSubscriber {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  firstName   String?  @map("first_name")
+  lastName    String?  @map("last_name")
+  source      String?
+  tags        String[]
+  active      Boolean  @default(true)
+  subscribedAt DateTime @default(now()) @map("subscribed_at")
+  
+  @@map("email_subscribers")
+}

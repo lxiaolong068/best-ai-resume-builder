@@ -1,0 +1,57 @@
+# Robots.txt for Best AI Resume Builder 2025
+# https://bestairesume2025.com
+
+User-agent: *
+Allow: /
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+# Disallow admin and API endpoints from indexing
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+# Allow specific API endpoints that should be discoverable
+Allow: /api/tools
+Allow: /api/blog
+
+# Allow important pages
+Allow: /compare
+Allow: /ats-analyzer
+Allow: /blog/
+Allow: /tools/
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://bestairesume2025.com/sitemap.xml
+Sitemap: https://bestairesume2025.com/sitemap-blog.xml
+Sitemap: https://bestairesume2025.com/sitemap-tools.xml
