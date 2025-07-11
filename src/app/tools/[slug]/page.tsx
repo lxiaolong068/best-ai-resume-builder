@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { ToolDetailPage } from '@/components/ToolDetailPage'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // Generate static params for all tools
@@ -20,7 +20,8 @@ export async function generateStaticParams() {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tool = await getToolBySlug(params.slug)
+  const { slug } = await params
+  const tool = await getToolBySlug(slug)
   
   if (!tool) {
     return {
@@ -48,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${tool.name} Review 2025 - ATS Score: ${atsScore}/100`,
       description: `Expert review of ${tool.name}. Real ATS testing results, features analysis, and pricing comparison for 2025.`,
       type: 'article',
-      url: `/tools/${params.slug}`,
+      url: `/tools/${slug}`,
       images: [
         {
           url: tool.logoUrl || '/images/default-tool-og.jpg',
@@ -65,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [tool.logoUrl || '/images/default-tool-og.jpg']
     },
     alternates: {
-      canonical: `/tools/${params.slug}`
+      canonical: `/tools/${slug}`
     }
   }
 }
@@ -79,13 +80,26 @@ async function getToolBySlug(slug: string) {
     }
   })
 
-  return tools.find(tool => 
+  const foundTool = tools.find(tool => 
     tool.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') === slug
   )
+
+  if (!foundTool) return null
+
+  // Convert Prisma Decimal to number for rating
+  return {
+    ...foundTool,
+    rating: foundTool.rating ? Number(foundTool.rating) : null,
+    reviews: foundTool.reviews.map(review => ({
+      ...review,
+      overallRating: review.overallRating ? Number(review.overallRating) : null
+    }))
+  }
 }
 
 export default async function ToolPage({ params }: Props) {
-  const tool = await getToolBySlug(params.slug)
+  const { slug } = await params
+  const tool = await getToolBySlug(slug)
 
   if (!tool) {
     notFound()

@@ -296,13 +296,14 @@ export class PerformanceMonitor {
     new PerformanceObserver((list) => {
       const entries = list.getEntries()
       entries.forEach(entry => {
-        console.log('FID:', entry.processingStart - entry.startTime)
+        const fidEntry = entry as any
+        console.log('FID:', fidEntry.processingStart - fidEntry.startTime)
         
         if (window.gtag) {
           window.gtag('event', 'web_vitals', {
             event_category: 'performance',
             event_label: 'FID',
-            value: Math.round(entry.processingStart - entry.startTime),
+            value: Math.round(fidEntry.processingStart - fidEntry.startTime),
           })
         }
       })
@@ -313,8 +314,9 @@ export class PerformanceMonitor {
     new PerformanceObserver((list) => {
       const entries = list.getEntries()
       entries.forEach(entry => {
-        if (!entry.hadRecentInput) {
-          clsValue += entry.value
+        const clsEntry = entry as any
+        if (!clsEntry.hadRecentInput) {
+          clsValue += clsEntry.value
         }
       })
       

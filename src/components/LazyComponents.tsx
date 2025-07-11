@@ -1,6 +1,6 @@
 'use client'
 
-import { lazy, Suspense } from 'react'
+import React, { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 
 // Loading component for lazy-loaded components
@@ -75,28 +75,29 @@ export const LazyComparisonTable = lazy(() =>
 )
 
 export const LazyATSAnalyzer = lazy(() => 
-  import('./ATSAnalyzer').then(module => ({ default: module.ATSAnalyzer }))
+  import('./ATSAnalyzerPage').then(module => ({ default: module.ATSAnalyzerPage }))
 )
 
 export const LazyVirtualizedToolList = lazy(() => 
   import('./VirtualizedToolList').then(module => ({ default: module.VirtualizedToolList }))
 )
 
-export const LazyToolSelector = lazy(() => 
-  import('./comparison/ToolSelector').then(module => ({ default: module.ToolSelector }))
-)
+// Removed non-existent comparison components
+// export const LazyToolSelector = lazy(() => 
+//   import('./comparison/ToolSelector').then(module => ({ default: module.ToolSelector }))
+// )
 
-export const LazyComparisonMatrix = lazy(() => 
-  import('./comparison/ComparisonMatrix').then(module => ({ default: module.ComparisonMatrix }))
-)
+// export const LazyComparisonMatrix = lazy(() => 
+//   import('./comparison/ComparisonMatrix').then(module => ({ default: module.ComparisonMatrix }))
+// )
 
-export const LazyComparisonFilters = lazy(() => 
-  import('./comparison/ComparisonFilters').then(module => ({ default: module.ComparisonFilters }))
-)
+// export const LazyComparisonFilters = lazy(() => 
+//   import('./comparison/ComparisonFilters').then(module => ({ default: module.ComparisonFilters }))
+// )
 
-export const LazyComparisonSummary = lazy(() => 
-  import('./comparison/ComparisonSummary').then(module => ({ default: module.ComparisonSummary }))
-)
+// export const LazyComparisonSummary = lazy(() => 
+//   import('./comparison/ComparisonSummary').then(module => ({ default: module.ComparisonSummary }))
+// )
 
 // Wrapper components with suspense and error boundaries
 export const ComparisonTableWithSuspense = (props: any) => (
@@ -117,29 +118,30 @@ export const VirtualizedToolListWithSuspense = (props: any) => (
   </Suspense>
 )
 
-export const ToolSelectorWithSuspense = (props: any) => (
-  <Suspense fallback={<LoadingSpinner message="Loading tool selector..." />}>
-    <LazyToolSelector {...props} />
-  </Suspense>
-)
+// Removed components that don't exist
+// export const ToolSelectorWithSuspense = (props: any) => (
+//   <Suspense fallback={<LoadingSpinner message="Loading tool selector..." />}>
+//     <LazyToolSelector {...props} />
+//   </Suspense>
+// )
 
-export const ComparisonMatrixWithSuspense = (props: any) => (
-  <Suspense fallback={<LoadingSpinner message="Loading comparison matrix..." />}>
-    <LazyComparisonMatrix {...props} />
-  </Suspense>
-)
+// export const ComparisonMatrixWithSuspense = (props: any) => (
+//   <Suspense fallback={<LoadingSpinner message="Loading comparison matrix..." />}>
+//     <LazyComparisonMatrix {...props} />
+//   </Suspense>
+// )
 
-export const ComparisonFiltersWithSuspense = (props: any) => (
-  <Suspense fallback={<LoadingSpinner message="Loading filters..." />}>
-    <LazyComparisonFilters {...props} />
-  </Suspense>
-)
+// export const ComparisonFiltersWithSuspense = (props: any) => (
+//   <Suspense fallback={<LoadingSpinner message="Loading filters..." />}>
+//     <LazyComparisonFilters {...props} />
+//   </Suspense>
+// )
 
-export const ComparisonSummaryWithSuspense = (props: any) => (
-  <Suspense fallback={<LoadingSpinner message="Loading summary..." />}>
-    <LazyComparisonSummary {...props} />
-  </Suspense>
-)
+// export const ComparisonSummaryWithSuspense = (props: any) => (
+//   <Suspense fallback={<LoadingSpinner message="Loading summary..." />}>
+//     <LazyComparisonSummary {...props} />
+//   </Suspense>
+// )
 
 // Higher-order component for lazy loading with error boundary
 export function withLazyLoading<T extends object>(
@@ -196,7 +198,7 @@ export function useDynamicImport<T>(
 // Preload function for critical components
 export const preloadComponents = {
   comparisonTable: () => import('./ComparisonTable'),
-  atsAnalyzer: () => import('./ATSAnalyzer'),
+  atsAnalyzer: () => import('./ATSAnalyzerPage'),
   virtualizedToolList: () => import('./VirtualizedToolList'),
 }
 

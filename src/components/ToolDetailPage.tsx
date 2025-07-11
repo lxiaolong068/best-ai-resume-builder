@@ -16,13 +16,13 @@ import { ShareIcon, HeartIcon } from '@heroicons/react/24/outline'
 interface Tool {
   id: string
   name: string
-  description: string
-  websiteUrl: string
-  pricingModel: string
-  features: any
+  description: string | null
+  websiteUrl: string | null
+  pricingModel: string | null
+  features: any | null
   affiliateLink: string | null
   logoUrl: string | null
-  rating: string | null
+  rating: number | null
   reviews: Array<{
     id: string
     speedScore: number | null
@@ -30,8 +30,8 @@ interface Tool {
     easeOfUse: number | null
     templateCount: number | null
     pricingScore: number | null
-    overallRating: string | null
-    reviewDate: string | null
+    overallRating: number | null
+    reviewDate: Date | null
     reviewerNotes: string | null
   }>
 }
@@ -89,7 +89,7 @@ export function ToolDetailPage({ tool }: Props) {
                     {tool.name} Review 2025
                   </h1>
                   <p className="text-xl text-gray-600 mb-6">
-                    {tool.description}
+                    {tool.description || 'No description available'}
                   </p>
                   <div className="flex items-center space-x-6">
                     <div className="flex items-center space-x-2">
@@ -104,7 +104,7 @@ export function ToolDetailPage({ tool }: Props) {
                     </div>
                     <div className="flex items-center space-x-2">
                       <CurrencyDollarIcon className="w-5 h-5 text-blue-500" />
-                      <span className="text-lg font-semibold">{tool.pricingModel}</span>
+                      <span className="text-lg font-semibold">{tool.pricingModel || 'Not specified'}</span>
                     </div>
                   </div>
                 </div>
@@ -112,15 +112,17 @@ export function ToolDetailPage({ tool }: Props) {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4">
-                <a
-                  href={tool.affiliateLink || tool.websiteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                >
-                  <span>Try {tool.name}</span>
-                  <ArrowTopRightOnSquareIcon className="w-5 h-5" />
-                </a>
+{(tool.affiliateLink || tool.websiteUrl) && (
+                  <a
+                    href={tool.affiliateLink || tool.websiteUrl || '#'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-2 bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                  >
+                    <span>Try {tool.name}</span>
+                    <ArrowTopRightOnSquareIcon className="w-5 h-5" />
+                  </a>
+                )}
                 <button
                   onClick={handleShare}
                   className="inline-flex items-center space-x-2 bg-gray-100 text-gray-700 px-6 py-4 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
@@ -214,73 +216,81 @@ export function ToolDetailPage({ tool }: Props) {
             <div className="bg-white rounded-2xl p-8 shadow-sm">
               <h2 className="text-2xl font-bold text-gray-900 mb-8">Key Features</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex items-center space-x-3">
-                  {tool.features.atsOptimized ? (
-                    <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
-                  ) : (
-                    <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
-                  )}
-                  <span className="text-gray-700">ATS Optimized</span>
-                </div>
+                {tool.features ? (
+                  <>
+                    <div className="flex items-center space-x-3">
+                      {tool.features.atsOptimized ? (
+                        <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
+                      ) : (
+                        <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
+                      )}
+                      <span className="text-gray-700">ATS Optimized</span>
+                    </div>
 
-                <div className="flex items-center space-x-3">
-                  {tool.features.aiSuggestions ? (
-                    <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
-                  ) : (
-                    <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
-                  )}
-                  <span className="text-gray-700">AI Suggestions</span>
-                </div>
+                    <div className="flex items-center space-x-3">
+                      {tool.features.aiSuggestions ? (
+                        <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
+                      ) : (
+                        <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
+                      )}
+                      <span className="text-gray-700">AI Suggestions</span>
+                    </div>
 
-                <div className="flex items-center space-x-3">
-                  {tool.features.coverLetter ? (
-                    <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
-                  ) : (
-                    <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
-                  )}
-                  <span className="text-gray-700">Cover Letter Builder</span>
-                </div>
+                    <div className="flex items-center space-x-3">
+                      {tool.features.coverLetter ? (
+                        <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
+                      ) : (
+                        <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
+                      )}
+                      <span className="text-gray-700">Cover Letter Builder</span>
+                    </div>
 
-                <div className="flex items-center space-x-3">
-                  {tool.features.tracking ? (
-                    <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
-                  ) : (
-                    <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
-                  )}
-                  <span className="text-gray-700">Application Tracking</span>
-                </div>
+                    <div className="flex items-center space-x-3">
+                      {tool.features.tracking ? (
+                        <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
+                      ) : (
+                        <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
+                      )}
+                      <span className="text-gray-700">Application Tracking</span>
+                    </div>
 
-                <div className="flex items-center space-x-3">
-                  {tool.features.linkedinIntegration ? (
-                    <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
-                  ) : (
-                    <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
-                  )}
-                  <span className="text-gray-700">LinkedIn Integration</span>
-                </div>
+                    <div className="flex items-center space-x-3">
+                      {tool.features.linkedinIntegration ? (
+                        <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
+                      ) : (
+                        <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
+                      )}
+                      <span className="text-gray-700">LinkedIn Integration</span>
+                    </div>
 
-                <div className="flex items-center space-x-3">
-                  {tool.features.collaboration ? (
-                    <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
-                  ) : (
-                    <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
-                  )}
-                  <span className="text-gray-700">Team Collaboration</span>
-                </div>
+                    <div className="flex items-center space-x-3">
+                      {tool.features.collaboration ? (
+                        <CheckIcon className="w-6 h-6 text-green-500 flex-shrink-0" />
+                      ) : (
+                        <XMarkIcon className="w-6 h-6 text-red-500 flex-shrink-0" />
+                      )}
+                      <span className="text-gray-700">Team Collaboration</span>
+                    </div>
 
-                <div className="flex items-center space-x-3">
-                  <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-xs font-bold text-blue-600">{tool.features.templates || 0}</span>
-                  </span>
-                  <span className="text-gray-700">Templates Available</span>
-                </div>
+                    <div className="flex items-center space-x-3">
+                      <span className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-xs font-bold text-blue-600">{tool.features.templates || 0}</span>
+                      </span>
+                      <span className="text-gray-700">Templates Available</span>
+                    </div>
 
-                <div className="flex items-center space-x-3">
-                  <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-xs font-bold text-purple-600">{tool.features.languages?.length || 0}</span>
-                  </span>
-                  <span className="text-gray-700">Languages Supported</span>
-                </div>
+                    <div className="flex items-center space-x-3">
+                      <span className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-xs font-bold text-purple-600">{tool.features.languages?.length || 0}</span>
+                      </span>
+                      <span className="text-gray-700">Languages Supported</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="col-span-2 text-gray-500 italic">
+                    Feature details not available
+                  </div>
+                )}
               </div>
             </div>
 

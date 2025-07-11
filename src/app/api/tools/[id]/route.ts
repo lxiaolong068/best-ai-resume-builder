@@ -6,10 +6,10 @@ import { toolSchema, validateRequest } from '@/lib/validation'
 // GET /api/tools/[id] - Get a specific AI tool by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const { id } = await params
 
     // Use cached query
     const tool = await getToolByIdWithCache(id)
@@ -47,10 +47,10 @@ export async function GET(
 // PUT /api/tools/[id] - Update a specific AI tool (Admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const { id } = await params
     const body = await request.json()
     
     // Check if tool exists
@@ -102,10 +102,10 @@ export async function PUT(
 // DELETE /api/tools/[id] - Delete a specific AI tool (Admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params
+    const { id } = await params
     
     // Check if tool exists
     const existingTool = await prisma.aiTool.findUnique({

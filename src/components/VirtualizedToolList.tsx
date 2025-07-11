@@ -2,19 +2,20 @@
 
 import React, { memo, useCallback, useMemo } from 'react'
 import { FixedSizeList as List } from 'react-window'
+// @ts-ignore
 import InfiniteLoader from 'react-window-infinite-loader'
 import { motion } from 'framer-motion'
 
 interface Tool {
   id: string
   name: string
-  description: string
-  websiteUrl: string
-  pricingModel: string
+  description: string | null
+  websiteUrl: string | null
+  pricingModel: string | null
   rating: number | null
   logoUrl: string | null
   affiliateLink: string | null
-  features: any
+  features: any | null
 }
 
 interface VirtualizedToolListProps {
@@ -103,11 +104,11 @@ const ToolItem = memo<{
               )}
             </div>
             <p className="text-sm text-gray-600 line-clamp-2 mt-1">
-              {tool.description}
+              {tool.description || 'No description available'}
             </p>
             <div className="flex items-center space-x-4 mt-2">
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {tool.pricingModel}
+                {tool.pricingModel || 'Not specified'}
               </span>
               {tool.features?.atsOptimized && (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -188,10 +189,11 @@ export const VirtualizedToolList: React.FC<VirtualizedToolListProps> = ({
         itemCount={itemCount}
         loadMoreItems={isNextPageLoading ? () => {} : loadNextPage}
       >
-        {({ onItemsRendered, ref }) => (
+        {({ onItemsRendered, ref }: any) => (
           <List
             ref={ref}
             height={height}
+            width="100%"
             itemCount={itemCount}
             itemSize={itemHeight}
             itemData={itemData}

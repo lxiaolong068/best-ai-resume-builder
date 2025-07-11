@@ -124,8 +124,8 @@ export class ErrorBoundary extends Component<Props, State> {
     this.props.onError?.(error, errorInfo)
     
     // Send error to external service (e.g., Sentry)
-    if (typeof window !== 'undefined' && window.Sentry) {
-      window.Sentry.captureException(error, {
+    if (typeof window !== 'undefined' && (window as any).Sentry) {
+      (window as any).Sentry.captureException(error, {
         contexts: {
           react: {
             componentStack: errorInfo.componentStack,
@@ -208,8 +208,8 @@ export function useErrorHandler() {
     )
     
     // Send to external service
-    if (typeof window !== 'undefined' && window.Sentry) {
-      window.Sentry.captureException(error)
+    if (typeof window !== 'undefined' && (window as any).Sentry) {
+      (window as any).Sentry.captureException(error)
     }
   }
 }

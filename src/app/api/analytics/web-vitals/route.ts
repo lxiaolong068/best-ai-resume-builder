@@ -30,10 +30,10 @@ export async function POST(request: NextRequest) {
     // Add additional metadata
     const enrichedData = {
       ...data,
-      ip: request.ip || 'unknown',
-      country: request.geo?.country || 'unknown',
-      city: request.geo?.city || 'unknown',
-      region: request.geo?.region || 'unknown',
+      ip: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
+      country: request.headers.get('x-vercel-ip-country') || 'unknown',
+      city: request.headers.get('x-vercel-ip-city') || 'unknown',
+      region: request.headers.get('x-vercel-ip-country-region') || 'unknown',
       receivedAt: new Date().toISOString()
     }
 

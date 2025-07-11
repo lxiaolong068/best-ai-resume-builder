@@ -25,7 +25,7 @@ export function WebVitalsMonitor() {
     if (typeof window === 'undefined') return
 
     // Import web-vitals library dynamically
-    import('web-vitals').then(({ onCLS, onFID, onFCP, onLCP, onTTFB }) => {
+    import('web-vitals').then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
       // Monitor Largest Contentful Paint
       onLCP((metric) => {
         reportWebVital({
@@ -38,12 +38,12 @@ export function WebVitalsMonitor() {
         })
       })
 
-      // Monitor First Input Delay
-      onFID((metric) => {
+      // Monitor Interaction to Next Paint
+      onINP((metric) => {
         reportWebVital({
-          name: 'FID',
+          name: 'INP',
           value: metric.value,
-          rating: getRating('FID', metric.value),
+          rating: getRating('INP', metric.value),
           delta: metric.delta,
           id: metric.id,
           navigationType: metric.navigationType
@@ -171,8 +171,8 @@ function monitorAdditionalMetrics() {
         // Calculate additional metrics
         const metrics = {
           domContentLoaded: navEntry.domContentLoadedEventEnd - navEntry.domContentLoadedEventStart,
-          domComplete: navEntry.domComplete - navEntry.navigationStart,
-          loadComplete: navEntry.loadEventEnd - navEntry.navigationStart,
+          domComplete: navEntry.domComplete - navEntry.startTime,
+          loadComplete: navEntry.loadEventEnd - navEntry.startTime,
           redirectTime: navEntry.redirectEnd - navEntry.redirectStart,
           dnsTime: navEntry.domainLookupEnd - navEntry.domainLookupStart,
           connectTime: navEntry.connectEnd - navEntry.connectStart,

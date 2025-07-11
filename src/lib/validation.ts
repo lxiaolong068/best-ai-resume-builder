@@ -12,7 +12,7 @@ export const toolComparisonSchema = z.object({
 // Event tracking validation schema
 export const eventTrackingSchema = z.object({
   eventType: z.string().min(1).max(100),
-  eventData: z.record(z.any()),
+  eventData: z.record(z.string(), z.any()),
   pageUrl: z.string().url().optional(),
   timestamp: z.string().datetime().optional(),
 })
@@ -69,7 +69,7 @@ export function validateRequest<T>(schema: z.ZodSchema<T>, data: unknown): { suc
     return { success: true, data: validatedData }
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ')
+      const errorMessages = error.issues.map(err => `${err.path.join('.')}: ${err.message}`).join(', ')
       return { success: false, error: `Validation error: ${errorMessages}` }
     }
     return { success: false, error: 'Unknown validation error' }

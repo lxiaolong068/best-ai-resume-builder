@@ -16,9 +16,9 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 interface Tool {
   id: string
   name: string
-  description: string
-  websiteUrl: string
-  pricingModel: string
+  description: string | null
+  websiteUrl: string | null
+  pricingModel: string | null
   features: {
     atsOptimized: boolean
     templates: number
@@ -32,10 +32,10 @@ interface Tool {
     analytics: boolean
     linkedinIntegration: boolean
     keywordOptimization: boolean
-  }
+  } | null
   affiliateLink: string | null
   logoUrl: string | null
-  rating: string | null
+  rating: number | null
   reviews: Array<{
     id: string
     speedScore: number | null
@@ -43,8 +43,8 @@ interface Tool {
     easeOfUse: number | null
     templateCount: number | null
     pricingScore: number | null
-    overallRating: string | null
-    reviewDate: string | null
+    overallRating: number | null
+    reviewDate: Date | null
     reviewerNotes: string | null
   }>
 }
@@ -87,7 +87,7 @@ export function ComparisonTable() {
   useEffect(() => {
     if (tools.length > 0 && selectedTools.length === 0) {
       const topTools = tools
-        .sort((a, b) => parseFloat(b.rating || '0') - parseFloat(a.rating || '0'))
+        .sort((a, b) => (b.rating || 0) - (a.rating || 0))
         .slice(0, 3)
         .map(tool => tool.id)
       setSelectedTools(topTools)
@@ -153,9 +153,9 @@ export function ComparisonTable() {
   // Filter and sort tools
   const filteredTools = tools.filter(tool => {
     const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         tool.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesATS = filterATS === null || tool.features.atsOptimized === filterATS
-    const matchesPricing = !filterPricing || tool.pricingModel.toLowerCase() === filterPricing.toLowerCase()
+                         (tool.description && tool.description.toLowerCase().includes(searchTerm.toLowerCase()))
+    const matchesATS = filterATS === null || (tool.features && tool.features.atsOptimized === filterATS)
+    const matchesPricing = !filterPricing || (tool.pricingModel && tool.pricingModel.toLowerCase() === filterPricing.toLowerCase())
 
     return matchesSearch && matchesATS && matchesPricing
   }).sort((a, b) => {
@@ -163,8 +163,8 @@ export function ComparisonTable() {
 
     switch (sortBy) {
       case 'rating':
-        aValue = parseFloat(a.rating || '0')
-        bValue = parseFloat(b.rating || '0')
+        aValue = a.rating || 0
+        bValue = b.rating || 0
         break
       case 'name':
         aValue = a.name.toLowerCase()
@@ -195,12 +195,12 @@ export function ComparisonTable() {
       ['Feature', ...selectedToolsData.map(tool => tool.name)],
       ['Rating', ...selectedToolsData.map(tool => tool.rating || 'N/A')],
       ['ATS Score', ...selectedToolsData.map(tool => tool.reviews[0]?.atsScore || 'N/A')],
-      ['Pricing Model', ...selectedToolsData.map(tool => tool.pricingModel)],
-      ['Templates', ...selectedToolsData.map(tool => tool.features.templates)],
-      ['ATS Optimized', ...selectedToolsData.map(tool => tool.features.atsOptimized ? 'Yes' : 'No')],
-      ['AI Suggestions', ...selectedToolsData.map(tool => tool.features.aiSuggestions ? 'Yes' : 'No')],
-      ['Cover Letter', ...selectedToolsData.map(tool => tool.features.coverLetter ? 'Yes' : 'No')],
-      ['Support', ...selectedToolsData.map(tool => tool.features.support)],
+      ['Pricing Model', ...selectedToolsData.map(tool => tool.pricingModel || 'N/A')],
+      ['Templates', ...selectedToolsData.map(tool => tool.features?.templates || 'N/A')],
+      ['ATS Optimized', ...selectedToolsData.map(tool => tool.features?.atsOptimized ? 'Yes' : 'No')],
+      ['AI Suggestions', ...selectedToolsData.map(tool => tool.features?.aiSuggestions ? 'Yes' : 'No')],
+      ['Cover Letter', ...selectedToolsData.map(tool => tool.features?.coverLetter ? 'Yes' : 'No')],
+      ['Support', ...selectedToolsData.map(tool => tool.features?.support || 'N/A')],
     ]
 
     const csvContent = csvData.map(row => row.join(',')).join('\n')
@@ -448,7 +448,7 @@ export function ComparisonTable() {
                     <div className="text-sm text-gray-500">Based on 50+ ATS systems</div>
                   </td>
                   {selectedToolsData.map((tool) => {
-                    const atsScore = tool.latestReview?.atsScore || 0
+                    const atsScore = tool.reviews[0]?.atsScore || 0
                     return (
                       <td key={tool.id} className="p-6 text-center">
                         <div className="flex flex-col items-center space-y-2">
@@ -500,7 +500,7 @@ export function ComparisonTable() {
                   {selectedToolsData.map((tool) => (
                     <td key={tool.id} className="p-6 text-center">
                       <div className="text-lg font-semibold text-gray-900">
-                        {tool.features.templates || 0}+
+                        {tool.features?.templates || 0}+
                       </div>
                     </td>
                   ))}
@@ -513,7 +513,7 @@ export function ComparisonTable() {
                   </td>
                   {selectedToolsData.map((tool) => (
                     <td key={tool.id} className="p-6 text-center">
-                      {tool.features.atsOptimized ? (
+                      {tool.features?.atsOptimized ? (
                         <CheckIcon className="w-6 h-6 text-green-500 mx-auto" />
                       ) : (
                         <XMarkIcon className="w-6 h-6 text-red-500 mx-auto" />
@@ -529,7 +529,7 @@ export function ComparisonTable() {
                   </td>
                   {selectedToolsData.map((tool) => (
                     <td key={tool.id} className="p-6 text-center">
-                      {tool.features.aiSuggestions ? (
+                      {tool.features?.aiSuggestions ? (
                         <CheckIcon className="w-6 h-6 text-green-500 mx-auto" />
                       ) : (
                         <XMarkIcon className="w-6 h-6 text-red-500 mx-auto" />
@@ -545,7 +545,7 @@ export function ComparisonTable() {
                     <div className="text-sm text-gray-500">Generation speed rating</div>
                   </td>
                   {selectedToolsData.map((tool) => {
-                    const speedScore = tool.latestReview?.speedScore || 0
+                    const speedScore = tool.reviews[0]?.speedScore || 0
                     return (
                       <td key={tool.id} className="p-6 text-center">
                         <div className="text-lg font-semibold text-gray-900">
@@ -563,7 +563,7 @@ export function ComparisonTable() {
                     <div className="text-sm text-gray-500">User experience rating</div>
                   </td>
                   {selectedToolsData.map((tool) => {
-                    const easeOfUse = tool.latestReview?.easeOfUse || 0
+                    const easeOfUse = tool.reviews[0]?.easeOfUse || 0
                     return (
                       <td key={tool.id} className="p-6 text-center">
                         <div className="text-lg font-semibold text-gray-900">
@@ -583,7 +583,7 @@ export function ComparisonTable() {
                       </td>
                       {selectedToolsData.map((tool) => (
                         <td key={tool.id} className="p-6 text-center">
-                          {tool.features.coverLetter ? (
+                          {tool.features?.coverLetter ? (
                             <CheckIcon className="w-6 h-6 text-green-500 mx-auto" />
                           ) : (
                             <XMarkIcon className="w-6 h-6 text-red-500 mx-auto" />
@@ -599,7 +599,7 @@ export function ComparisonTable() {
                       </td>
                       {selectedToolsData.map((tool) => (
                         <td key={tool.id} className="p-6 text-center">
-                          {tool.features.tracking ? (
+                          {tool.features?.tracking ? (
                             <CheckIcon className="w-6 h-6 text-green-500 mx-auto" />
                           ) : (
                             <XMarkIcon className="w-6 h-6 text-red-500 mx-auto" />
@@ -615,7 +615,7 @@ export function ComparisonTable() {
                       </td>
                       {selectedToolsData.map((tool) => (
                         <td key={tool.id} className="p-6 text-center">
-                          {tool.features.linkedinIntegration ? (
+                          {tool.features?.linkedinIntegration ? (
                             <CheckIcon className="w-6 h-6 text-green-500 mx-auto" />
                           ) : (
                             <XMarkIcon className="w-6 h-6 text-red-500 mx-auto" />
@@ -631,7 +631,7 @@ export function ComparisonTable() {
                       </td>
                       {selectedToolsData.map((tool) => (
                         <td key={tool.id} className="p-6 text-center">
-                          {tool.features.collaboration ? (
+                          {tool.features?.collaboration ? (
                             <CheckIcon className="w-6 h-6 text-green-500 mx-auto" />
                           ) : (
                             <XMarkIcon className="w-6 h-6 text-red-500 mx-auto" />
@@ -648,7 +648,7 @@ export function ComparisonTable() {
                       {selectedToolsData.map((tool) => (
                         <td key={tool.id} className="p-6 text-center">
                           <div className="text-sm text-gray-900">
-                            {tool.features.exportFormats?.join(', ') || 'N/A'}
+                            {tool.features?.exportFormats?.join(', ') || 'N/A'}
                           </div>
                         </td>
                       ))}
@@ -662,7 +662,7 @@ export function ComparisonTable() {
                       {selectedToolsData.map((tool) => (
                         <td key={tool.id} className="p-6 text-center">
                           <div className="text-sm text-gray-900">
-                            {tool.features.languages?.length || 0} languages
+                            {tool.features?.languages?.length || 0} languages
                           </div>
                         </td>
                       ))}
@@ -676,7 +676,7 @@ export function ComparisonTable() {
                       {selectedToolsData.map((tool) => (
                         <td key={tool.id} className="p-6 text-center">
                           <div className="text-sm font-medium text-gray-900">
-                            {tool.features.support || 'N/A'}
+                            {tool.features?.support || 'N/A'}
                           </div>
                         </td>
                       ))}
@@ -692,7 +692,7 @@ export function ComparisonTable() {
                   {selectedToolsData.map((tool) => (
                     <td key={tool.id} className="p-6 text-center">
                       <a
-                        href={tool.affiliateLink || tool.websiteUrl}
+                        href={tool.affiliateLink || tool.websiteUrl || '#'}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"

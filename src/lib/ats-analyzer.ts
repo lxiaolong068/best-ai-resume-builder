@@ -372,7 +372,7 @@ function generateSummary(sections: any, overallScore: number) {
   if (sections.content.issues.includes('Limited quantifiable achievements')) {
     quickWins.push('Add specific numbers and metrics to achievements')
   }
-  if (sections.formatting.issues.some(issue => issue.includes('bullet symbols'))) {
+  if (sections.formatting.issues.some((issue: any) => issue.includes('bullet symbols'))) {
     quickWins.push('Replace special bullet symbols with simple dashes')
   }
   

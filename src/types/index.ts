@@ -68,51 +68,28 @@ export interface ToolFeatures {
 // Tool interface
 export interface Tool extends BaseEntity {
   name: string
-  description: string
-  websiteUrl: string
-  pricingModel: PricingModel
-  features: ToolFeatures
+  description: string | null
+  websiteUrl: string | null
+  pricingModel: string | null
+  features: any | null
   affiliateLink: string | null
   logoUrl: string | null
   rating: number | null
-  featured: boolean
-  active: boolean
   reviews: ToolReview[]
-  tags: string[]
-  category: string
-  monthlyVisitors?: number
-  foundedYear?: number
-  headquarters?: string
-  employeeCount?: string
-  funding?: string
 }
 
 // Tool review interface
 export interface ToolReview extends BaseEntity {
   toolId: string
   tool?: Tool
+  speedScore: number | null
   atsScore: number | null
+  easeOfUse: number | null
+  templateCount: number | null
+  pricingScore: number | null
   overallRating: number | null
   reviewDate: Date | null
   reviewerNotes: string | null
-  pros: string[]
-  cons: string[]
-  bestFor: string[]
-  pricing: {
-    free: boolean
-    startingPrice?: number
-    currency: string
-    billingCycle?: 'monthly' | 'yearly'
-  }
-  features: {
-    easeOfUse: number // 1-5
-    templateQuality: number // 1-5
-    customization: number // 1-5
-    atsCompatibility: number // 1-5
-    customerSupport: number // 1-5
-  }
-  verified: boolean
-  reviewerType: 'expert' | 'user' | 'staff'
 }
 
 // User event interface
@@ -355,8 +332,8 @@ export function assertTool(obj: any): asserts obj is Tool {
   if (typeof obj.name !== 'string') {
     throw new Error('Tool must have a valid name')
   }
-  if (!isValidPricingModel(obj.pricingModel)) {
-    throw new Error('Tool must have a valid pricing model')
+  if (obj.description !== null && typeof obj.description !== 'string') {
+    throw new Error('Tool description must be a string or null')
   }
 }
 

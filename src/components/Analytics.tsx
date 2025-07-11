@@ -299,9 +299,10 @@ export function PerformanceMonitor() {
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries()
         entries.forEach((entry) => {
+          const fidEntry = entry as any
           trackCustomEvent('core_web_vitals', {
             metric: 'FID',
-            value: entry.processingStart - entry.startTime,
+            value: fidEntry.processingStart - fidEntry.startTime,
             page: window.location.pathname
           })
         })
@@ -313,8 +314,9 @@ export function PerformanceMonitor() {
       const clsObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries()
         entries.forEach((entry) => {
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value
+          const clsEntry = entry as any
+          if (!clsEntry.hadRecentInput) {
+            clsValue += clsEntry.value
           }
         })
         

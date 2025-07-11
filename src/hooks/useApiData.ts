@@ -81,7 +81,7 @@ export function useApiData<T = any>(
       }
     } catch (err) {
       const apiError = err instanceof ApiError ? err : new ApiError(
-        'INTERNAL_ERROR',
+        'INTERNAL_ERROR' as any,
         err instanceof Error ? err.message : 'Unknown error occurred'
       )
 
@@ -234,7 +234,7 @@ export function useMutation<TData = any, TVariables = any>(
       return result
     } catch (err) {
       const apiError = err instanceof ApiError ? err : new ApiError(
-        'INTERNAL_ERROR',
+        'INTERNAL_ERROR' as any,
         err instanceof Error ? err.message : 'Mutation failed'
       )
       

@@ -31,7 +31,7 @@ export async function rateLimit(identifier: string | null): Promise<{ success: b
     // Use Redis-based rate limiting in production
     try {
       const { success, limit, remaining, reset } = await ratelimit.limit(key)
-      return { success, limit, remaining, reset }
+      return { success, limit, remaining, reset: new Date(reset) }
     } catch (error) {
       console.error('Rate limiting error:', error)
       // Fallback to allowing the request if Redis fails

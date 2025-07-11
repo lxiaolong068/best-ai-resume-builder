@@ -11,13 +11,12 @@ export async function GET() {
         id: true,
         name: true,
         description: true,
-        category: true,
-        pricing: true,
+        pricingModel: true,
         features: true,
         updatedAt: true,
         createdAt: true
       },
-      orderBy: { overallScore: 'desc' }
+      orderBy: { rating: 'desc' }
     })
 
     // Generate tool page URLs

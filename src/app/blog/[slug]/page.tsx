@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma'
 import { BlogPostPage } from '@/components/BlogPostPage'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // Generate static params for all published blog posts
@@ -21,8 +21,9 @@ export async function generateStaticParams() {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
   const post = await prisma.blogPost.findUnique({
-    where: { slug: params.slug }
+    where: { slug }
   })
   
   if (!post || !post.published) {
@@ -66,8 +67,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPostPageRoute({ params }: Props) {
+  const { slug } = await params
   const post = await prisma.blogPost.findUnique({
-    where: { slug: params.slug }
+    where: { slug }
   })
 
   if (!post || !post.published) {

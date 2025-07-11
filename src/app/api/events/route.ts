@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
         },
         pageUrl: pageUrl || '/',
         userAgent,
-        timestamp: timestamp ? new Date(timestamp) : new Date(),
+        createdAt: timestamp ? new Date(timestamp) : new Date(),
       }
     })
     

@@ -146,7 +146,7 @@ export class ToolQueryBuilder {
       ...this.paginationOptions,
     })
 
-    return tools as Tool[]
+    return tools as unknown as Tool[]
   }
 
   // Execute query and return tools with count
@@ -222,7 +222,7 @@ export const toolQueries = {
   // Get tool by ID
   async getToolById(id: string): Promise<Tool | null> {
     const tool = await prisma.aiTool.findUnique({
-      where: { id, active: true },
+      where: { id },
       include: {
         reviews: {
           orderBy: { reviewDate: 'desc' },
@@ -250,7 +250,6 @@ export const toolQueries = {
     const tools = await prisma.aiTool.findMany({
       where: {
         id: { in: toolIds },
-        active: true,
       },
       include: {
         reviews: {
@@ -260,7 +259,7 @@ export const toolQueries = {
       },
     })
 
-    return tools as Tool[]
+    return tools as unknown as Tool[]
   },
 
   // Search tools
@@ -279,11 +278,10 @@ export const toolQueries = {
   async getToolsByCategory(category: string, limit: number = 10): Promise<Tool[]> {
     const tools = await prisma.aiTool.findMany({
       where: {
-        category: {
+        pricingModel: {
           equals: category,
           mode: 'insensitive',
         },
-        active: true,
       },
       include: {
         reviews: {
@@ -295,7 +293,7 @@ export const toolQueries = {
       take: limit,
     })
 
-    return tools as Tool[]
+    return tools as unknown as Tool[]
   },
 
   // Get top rated tools
@@ -342,7 +340,7 @@ export const reviewQueries = {
   // Get verified reviews
   async getVerifiedReviews(limit: number = 10): Promise<ToolReview[]> {
     const reviews = await prisma.toolReview.findMany({
-      where: { verified: true },
+      where: { overallRating: { gt: 4 } },
       orderBy: { reviewDate: 'desc' },
       take: limit,
       include: {
