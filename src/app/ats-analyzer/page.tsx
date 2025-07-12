@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import { ATSAnalyzerPage } from '@/components/ATSAnalyzerPage'
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Free ATS Resume Checker 2025 | Test Your Resume Compatibility',
@@ -95,7 +97,11 @@ export default function ATSAnalyzerPageRoute() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ATSAnalyzerPage />
+      <Navigation />
+      <div className="pt-20">
+        <ATSAnalyzerPage />
+      </div>
+      <Footer />
     </>
   )
 }

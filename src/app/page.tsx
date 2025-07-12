@@ -3,6 +3,8 @@ import { ComparisonTable } from '@/components/ComparisonTable'
 import { FeaturedTools } from '@/components/FeaturedTools'
 import { TestingMethodology } from '@/components/TestingMethodology'
 import { FAQ } from '@/components/FAQ'
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
 
 export const dynamic = 'force-dynamic'
 
@@ -80,6 +82,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <Navigation />
       <div className="min-h-screen bg-background">
         <Hero />
         <FeaturedTools />
@@ -87,6 +90,7 @@ export default function Home() {
         <TestingMethodology />
         <FAQ />
       </div>
+      <Footer />
     </>
   )
 }

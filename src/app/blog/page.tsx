@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
 import { prisma } from '@/lib/prisma'
 import { BlogListPage } from '@/components/BlogListPage'
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'AI Resume Builder Blog 2025 | Expert Tips & Guides',
@@ -95,7 +97,11 @@ export default async function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <BlogListPage posts={posts} />
+      <Navigation />
+      <div className="pt-20">
+        <BlogListPage posts={posts} />
+      </div>
+      <Footer />
     </>
   )
 }

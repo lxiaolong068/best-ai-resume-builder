@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import { ComparisonTable } from '@/components/ComparisonTable'
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'AI Resume Builder Comparison 2025 | Side-by-Side Analysis',
@@ -101,9 +103,11 @@ export default function ComparePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      
+
+      <Navigation />
+
       {/* Breadcrumb Navigation */}
-      <nav className="bg-white border-b border-gray-200">
+      <nav className="bg-white border-b border-gray-200 pt-20">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <ol className="flex items-center space-x-2 text-sm">
             <li>
@@ -204,6 +208,8 @@ export default function ComparePage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </>
   )
 }

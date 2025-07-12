@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import ATSChecker from '@/components/ATSChecker'
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Free ATS Resume Checker 2025 | Test Your Resume Compatibility',
@@ -14,7 +16,9 @@ export const metadata: Metadata = {
 
 export default function ATSCheckerPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-gray-50 pt-20">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
@@ -189,6 +193,8 @@ export default function ATSCheckerPage() {
           </a>
         </div>
       </section>
-    </div>
+      </div>
+      <Footer />
+    </>
   )
 }

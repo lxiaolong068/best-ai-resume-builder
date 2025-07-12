@@ -15,31 +15,6 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Navigation */}
-      <nav className="absolute top-0 left-0 right-0 z-50 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">AI</span>
-            </div>
-            <span className="font-semibold text-lg">ResumeBuilder</span>
-          </div>
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="/compare" className="text-gray-600 hover:text-blue-600 transition-colors">
-              Compare Tools
-            </a>
-            <a href="/methodology" className="text-gray-600 hover:text-blue-600 transition-colors">
-              Testing
-            </a>
-            <a href="/guides" className="text-gray-600 hover:text-blue-600 transition-colors">
-              Guides
-            </a>
-            <a href="/ats-checker" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-              Free ATS Check
-            </a>
-          </div>
-        </div>
-      </nav>
 
       {/* Hero Content */}
       <div className="relative pt-24 pb-16 px-6">

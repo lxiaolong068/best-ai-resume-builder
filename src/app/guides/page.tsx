@@ -1,5 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'AI Resume Builder Guides 2025 | Expert Tips & Best Practices',
@@ -96,7 +98,9 @@ const categories = [
 
 export default function GuidesPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-gray-50 pt-20">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
@@ -381,6 +385,8 @@ export default function GuidesPage() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+      <Footer />
+    </>
   )
 }

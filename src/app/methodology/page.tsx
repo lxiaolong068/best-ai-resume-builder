@@ -1,4 +1,6 @@
 import { Metadata } from 'next'
+import { Navigation } from '@/components/Navigation'
+import { Footer } from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'AI Resume Builder Testing Methodology 2025 | How We Test & Rank Tools',
@@ -13,7 +15,9 @@ export const metadata: Metadata = {
 
 export default function MethodologyPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-gray-50 pt-20">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
@@ -354,6 +358,8 @@ export default function MethodologyPage() {
           </p>
         </div>
       </section>
-    </div>
+      </div>
+      <Footer />
+    </>
   )
 }
