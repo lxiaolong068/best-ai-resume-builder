@@ -150,7 +150,7 @@ export function ComparisonTable() {
   }
 
   // Early return if tools is not properly initialized
-  if (!Array.isArray(tools)) {
+  if (!tools || !Array.isArray(tools) || tools.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center">

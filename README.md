@@ -7,6 +7,10 @@
 - **互动比较表**：AI简历生成器的并排比较
 - **真实ATS测试**：跨越50+ ATS系统的兼容性分数
 - **专家评论**：功能、定价和性能的详细分析
+- **免费ATS简历检查器**：上传并分析简历与ATS系统的兼容性
+- **专业简历模板**：免费的ATS优化简历模板下载
+- **全面指南**：AI简历构建和优化的专家指南
+- **测试方法论**：透明的测试过程文档
 - **SEO优化**：使用结构化数据优化搜索引擎可见性
 - **响应式设计**：针对所有设备优化
 - **性能优先**：快速加载，优化核心Web Vitals
@@ -27,13 +31,33 @@
 ```
 ├── src/
 │   ├── app/                 # Next.js App Router 页面
+│   │   ├── page.tsx         # 首页
+│   │   ├── ats-checker/     # ATS简历检查器页面
+│   │   ├── compare/         # 工具比较页面
+│   │   ├── methodology/     # 测试方法论页面
+│   │   ├── guides/          # 指南页面
+│   │   ├── templates/       # 简历模板页面
+│   │   └── api/             # API路由
 │   ├── components/          # React 组件
+│   │   ├── ATSChecker.tsx   # ATS检查器组件
+│   │   ├── ComparisonTable.tsx # 比较表组件
+│   │   └── Hero.tsx         # 首页英雄区组件
 │   ├── lib/                 # 实用函数和配置
 │   └── generated/           # 生成的Prisma客户端
 ├── prisma/                  # 数据库模式和迁移
 ├── public/                  # 静态资源
+├── tests/                   # Playwright端到端测试
 └── docs/                    # 项目文档
 ```
+
+## 🌐 页面路由
+
+- `/` - 首页：AI简历生成器比较和推荐
+- `/ats-checker` - ATS简历检查器：免费的简历兼容性测试工具
+- `/compare` - 工具比较：详细的AI简历生成器对比分析
+- `/methodology` - 测试方法论：透明的测试过程和评估标准
+- `/guides` - 指南中心：AI简历构建的专家指南和最佳实践
+- `/templates` - 简历模板：免费的ATS优化专业简历模板
 
 ## 🚀 快速开始
 
@@ -175,10 +199,27 @@ git commit -m "docs: update API documentation"
 
 ### 测试策略
 
-- 单元测试: Jest + React Testing Library
-- 集成测试: Cypress
-- 性能测试: Lighthouse CI
-- 安全测试: OWASP ZAP
+- 端到端测试: Playwright (已实现)
+  - 导航链接测试
+  - 页面加载和SEO测试
+  - 响应式设计测试
+  - 功能组件测试
+- 单元测试: Jest + React Testing Library (计划中)
+- 性能测试: Lighthouse CI (计划中)
+- 安全测试: OWASP ZAP (计划中)
+
+### 运行测试
+
+```bash
+# 运行Playwright端到端测试
+npm run test:e2e
+
+# 运行特定测试文件
+npx playwright test tests/navigation.spec.ts
+
+# 运行测试并查看报告
+npx playwright test --reporter=html
+```
 
 ## 📚 相关文档
 

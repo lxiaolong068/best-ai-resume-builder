@@ -1,0 +1,209 @@
+# Page snapshot
+
+```yaml
+- navigation:
+  - text: AI ResumeBuilder
+  - link "Compare Tools":
+    - /url: /compare
+  - link "Testing":
+    - /url: /methodology
+  - link "Guides":
+    - /url: /guides
+  - link "Free ATS Check":
+    - /url: /ats-checker
+- text: Updated January 2025
+- heading "Best AI Resume Builder 2025" [level=1]
+- paragraph: Expert-tested with real ATS scores. We analyzed 25+ AI resume builders across 50+ ATS systems to find the tools that actually land interviews.
+- text: 4.8/5 based on 1,200+ reviews
+- link "View Best Tools 2025":
+  - /url: /compare
+- link "Free ATS Test":
+  - /url: /ats-checker
+- text: 100% Free No Email Required Expert Tested
+- heading "Real ATS Test Results" [level=3]
+- text: Live Data R Resume.io 94/100 Z Zety 87/100 N Novoresume 82/100 C Canva 76/100
+- paragraph: Based on tests across 50+ ATS systems
+- text: 25+ AI Tools Tested 50+ ATS Systems 94% Success Rate 1,200+ User Reviews Scroll to explore
+- heading "Top 3 AI Resume Builders 2025" [level=2]
+- paragraph: Based on our comprehensive testing across 50+ ATS systems, user reviews, and feature analysis. These tools consistently deliver the best results.
+- text: Editor's Choice 4.8 / 5
+- heading "Resume.io" [level=3]
+- paragraph: The highest-scoring AI resume builder in our tests with exceptional ATS compatibility.
+- text: 94/100 ATS Score $2.95/month Starting Price
+- heading "Key Features:" [level=4]
+- list:
+  - listitem: AI-powered content suggestions
+  - listitem: ATS optimization scanner
+  - listitem: 25+ professional templates
+  - listitem: Real-time feedback
+  - listitem: Cover letter builder
+- heading "Why We Recommend It:" [level=4]
+- list:
+  - listitem: Highest ATS compatibility score
+  - listitem: Affordable pricing
+  - listitem: Excellent AI suggestions
+  - listitem: User-friendly interface
+- link "Try Resume.io Free":
+  - /url: "#"
+- link "Read Full Review":
+  - /url: "#resume.io-review"
+- text: R Resume.io Dashboard Preview of the resume builder interface ATS Score 94/100 Most Popular 4.6 / 5
+- heading "Zety" [level=3]
+- paragraph: Popular choice with beautiful templates and solid ATS performance.
+- text: 87/100 ATS Score $5.95/month Starting Price
+- heading "Key Features:" [level=4]
+- list:
+  - listitem: Beautiful design templates
+  - listitem: Content optimization
+  - listitem: Multi-format downloads
+  - listitem: Career advice blog
+  - listitem: LinkedIn integration
+- heading "Why We Recommend It:" [level=4]
+- list:
+  - listitem: Stunning visual designs
+  - listitem: Great customization options
+  - listitem: Comprehensive career resources
+  - listitem: Strong brand recognition
+- link "Try Zety Free":
+  - /url: "#"
+- link "Read Full Review":
+  - /url: "#zety-review"
+- text: Z Zety Dashboard Preview of the resume builder interface ATS Score 87/100 Best Value 4.4 / 5
+- heading "Novoresume" [level=3]
+- paragraph: Clean, professional templates with good ATS compatibility and unlimited downloads.
+- text: 82/100 ATS Score $16/month Starting Price
+- heading "Key Features:" [level=4]
+- list:
+  - listitem: Clean, modern templates
+  - listitem: Unlimited downloads
+  - listitem: Application tracking
+  - listitem: Interview preparation
+  - listitem: Career counseling
+- heading "Why We Recommend It:" [level=4]
+- list:
+  - listitem: Unlimited resume downloads
+  - listitem: Professional appearance
+  - listitem: Good ATS compatibility
+  - listitem: Comprehensive job search tools
+- link "Try Novoresume Free":
+  - /url: "#"
+- link "Read Full Review":
+  - /url: "#novoresume-review"
+- text: N Novoresume Dashboard Preview of the resume builder interface ATS Score 82/100
+- heading "Can't decide which tool is right for you?" [level=3]
+- paragraph: Try our free ATS compatibility checker to see how your current resume performs
+- button "Test Your Resume for Free"
+- heading "Interactive AI Resume Builder Comparison" [level=2]
+- paragraph: Compare the top AI resume builders side-by-side with real ATS test scores, pricing, and features. Click to add or remove tools from the comparison.
+- textbox "Search tools..."
+- combobox:
+  - option "All ATS Types" [selected]
+  - option "ATS Optimized"
+  - option "Not ATS Optimized"
+- combobox:
+  - option "All Pricing" [selected]
+  - option "Freemium"
+  - option "Subscription"
+  - option "Free/Paid"
+- combobox:
+  - option "Sort by Rating" [selected]
+  - option "Sort by Name"
+  - option "Sort by ATS Score"
+- button
+- heading "Select tools to compare (3/5):" [level=3]
+- button "Export CSV"
+- 'button "R Resume.io 4.8 • ATS: 92/100"'
+- 'button "R Resume.io 4.8 • ATS: 92/100"'
+- 'button "R Resume.io 4.8 • ATS: 92/100"'
+- 'button "R Resume.io 4.8 • ATS: 92/100"'
+- 'button "J Jasper AI Resume 4.7 • ATS: 95/100"'
+- 'button "J Jasper AI Resume 4.7 • ATS: 95/100"'
+- 'button "J Jasper AI Resume 4.7 • ATS: 95/100"'
+- 'button "J Jasper AI Resume 4.7 • ATS: 95/100"'
+- 'button "Z Zety 4.6 • ATS: 88/100"'
+- 'button "Z Zety 4.6 • ATS: 88/100"'
+- 'button "Z Zety 4.6 • ATS: 88/100"'
+- 'button "Z Zety 4.6 • ATS: 88/100"'
+- 'button "K Kickresume 4.5 • ATS: 90/100"'
+- 'button "K Kickresume 4.5 • ATS: 90/100"'
+- 'button "K Kickresume 4.5 • ATS: 90/100"'
+- 'button "K Kickresume 4.5 • ATS: 90/100"'
+- 'button "R Rezi 4.4 • ATS: 96/100"'
+- 'button "R Rezi 4.4 • ATS: 96/100"'
+- 'button "R Rezi 4.4 • ATS: 96/100"'
+- 'button "R Rezi 4.4 • ATS: 96/100"'
+- heading "Select Tools to Compare" [level=3]
+- paragraph: Choose up to 5 AI resume builders from the list above to see a detailed comparison.
+- heading "Our Testing Methodology" [level=2]
+- paragraph: We use rigorous, scientific testing methods to evaluate AI resume builders. Our rankings are based on real data, not opinions or affiliate commissions.
+- heading "ATS Compatibility Testing" [level=3]
+- paragraph: We test each resume builder across 50+ different ATS systems including Workday, Greenhouse, Lever, and more.
+- list:
+  - listitem: Test parsing accuracy
+  - listitem: Keyword extraction
+  - listitem: Format preservation
+  - listitem: Contact information detection
+- heading "Speed & Performance" [level=3]
+- paragraph: Measure loading times, generation speed, and overall user experience across different devices.
+- list:
+  - listitem: Page load times
+  - listitem: Resume generation speed
+  - listitem: Mobile responsiveness
+  - listitem: Server response times
+- heading "Real User Testing" [level=3]
+- paragraph: Actual job seekers create resumes and track their application success rates over 6 months.
+- list:
+  - listitem: 500+ real users
+  - listitem: Interview callback rates
+  - listitem: Job offer conversions
+  - listitem: User satisfaction scores
+- heading "Feature Analysis" [level=3]
+- paragraph: Comprehensive evaluation of templates, AI capabilities, customization options, and additional features.
+- list:
+  - listitem: Template quality & variety
+  - listitem: AI suggestion accuracy
+  - listitem: Customization options
+  - listitem: Export formats
+- heading "Testing Scale" [level=3]
+- paragraph: The largest independent study of AI resume builders
+- text: 50+ ATS Systems Tested Including all major platforms 2,500+ Resumes Analyzed Across different industries 500+ Real Users Tracking success rates 1,200+ Hours of Testing Comprehensive evaluation
+- 'heading "ATS Compatibility: The Most Important Factor" [level=3]'
+- paragraph: Over 98% of Fortune 500 companies use ATS systems to filter resumes. If your resume isn't ATS-compatible, it might never reach human eyes.
+- heading "Format Testing" [level=4]
+- paragraph: We test how well each tool's resumes parse through different ATS systems.
+- heading "Keyword Analysis" [level=4]
+- paragraph: Measure how accurately ATS systems extract skills and keywords.
+- heading "Real-World Results" [level=4]
+- paragraph: Track actual interview callback rates from real job applications.
+- heading "ATS Systems We Test Against" [level=4]
+- text: Workday Greenhouse Lever BambooHR iCIMS Jobvite SmartRecruiters Bullhorn JazzHR Recruiterbox ClearCompany Zoho Recruit + 38 more systems
+- heading "Transparency & Independence" [level=4]
+- paragraph: Our testing is completely independent. While we may earn affiliate commissions when you purchase through our links, this does not influence our rankings or scores. All tests are conducted objectively using the same criteria for every tool.
+- paragraph: "Last updated: January 2025 | Next update: April 2025"
+- heading "Frequently Asked Questions" [level=2]
+- paragraph: Get answers to the most common questions about AI resume builders
+- button "What makes an AI resume builder better than others?":
+  - heading "What makes an AI resume builder better than others?" [level=3]
+- paragraph: "The best AI resume builders combine three key factors: ATS compatibility (can pass through applicant tracking systems), intelligent content suggestions that are relevant to your industry, and professional templates that look polished. Our testing focuses heavily on ATS compatibility since 98% of Fortune 500 companies use these systems to filter resumes."
+- button "How do you test ATS compatibility?":
+  - heading "How do you test ATS compatibility?" [level=3]
+- button "Are AI resume builders worth the cost?":
+  - heading "Are AI resume builders worth the cost?" [level=3]
+- button "Can I trust AI to write my resume?":
+  - heading "Can I trust AI to write my resume?" [level=3]
+- button "Which resume builder is best for my industry?":
+  - heading "Which resume builder is best for my industry?" [level=3]
+- button "How often should I update my resume?":
+  - heading "How often should I update my resume?" [level=3]
+- button "Do hiring managers prefer AI-generated resumes?":
+  - heading "Do hiring managers prefer AI-generated resumes?" [level=3]
+- button "How do I avoid AI resume mistakes?":
+  - heading "How do I avoid AI resume mistakes?" [level=3]
+- heading "Still have questions?" [level=3]
+- paragraph: Try our free ATS compatibility checker to see how your current resume performs
+- button "Test Your Resume Free"
+- button "Read Our Complete Guide"
+- alert
+- button "Open Next.js Dev Tools":
+  - img
+```

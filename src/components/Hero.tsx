@@ -25,18 +25,18 @@ export function Hero() {
             <span className="font-semibold text-lg">ResumeBuilder</span>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#comparison" className="text-gray-600 hover:text-blue-600 transition-colors">
+            <a href="/compare" className="text-gray-600 hover:text-blue-600 transition-colors">
               Compare Tools
             </a>
-            <a href="#methodology" className="text-gray-600 hover:text-blue-600 transition-colors">
+            <a href="/methodology" className="text-gray-600 hover:text-blue-600 transition-colors">
               Testing
             </a>
-            <a href="#guides" className="text-gray-600 hover:text-blue-600 transition-colors">
+            <a href="/guides" className="text-gray-600 hover:text-blue-600 transition-colors">
               Guides
             </a>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+            <a href="/ats-checker" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
               Free ATS Check
-            </button>
+            </a>
           </div>
         </div>
       </nav>
@@ -77,12 +77,12 @@ export function Hero() {
 
               {/* CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg">
+                <a href="/compare" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg text-center">
                   View Best Tools 2025
-                </button>
-                <button className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-colors">
+                </a>
+                <a href="/ats-checker" className="border border-gray-300 text-gray-700 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-50 transition-colors text-center">
                   Free ATS Test
-                </button>
+                </a>
               </div>
 
               {/* Trust Indicators */}
