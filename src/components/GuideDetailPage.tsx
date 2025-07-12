@@ -61,7 +61,7 @@ export function GuideDetailPage({ guide, relatedGuides }: GuideDetailPageProps) 
       .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
       // 列表
       .replace(/^- (.+)$/gm, '<li class="mb-2">$1</li>')
-      .replace(/(<li.*<\/li>)/s, '<ul class="list-disc list-inside mb-6 space-y-2 text-gray-700">$1</ul>')
+      .replace(/(<li[\s\S]*?<\/li>)/g, '<ul class="list-disc list-inside mb-6 space-y-2 text-gray-700">$1</ul>')
       // 段落
       .replace(/^(?!<[h|u|l]|$)(.+)$/gm, '<p class="mb-4 text-gray-700 leading-relaxed">$1</p>')
 
