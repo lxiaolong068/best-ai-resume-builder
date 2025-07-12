@@ -1,4 +1,4 @@
-import { unstable_cache } from 'next/cache'
+import { unstable_cache, revalidateTag } from 'next/cache'
 import { prisma } from '@/lib/prisma'
 
 // Cache configuration
@@ -305,5 +305,35 @@ export class CacheStrategy {
       'Cache-Control': 'public, max-age=60',
       'Vary': 'Accept-Encoding',
     }
+  }
+}
+
+// Cache invalidation functions
+export async function clearAllCache() {
+  console.log('🧹 清除所有缓存...')
+
+  try {
+    // Revalidate all cache tags
+    revalidateTag(CACHE_TAGS.TOOLS)
+    revalidateTag(CACHE_TAGS.REVIEWS)
+    revalidateTag(CACHE_TAGS.EVENTS)
+    revalidateTag(CACHE_TAGS.ANALYTICS)
+
+    console.log('✅ 缓存清除完成')
+  } catch (error) {
+    console.error('❌ 清除缓存时出错:', error)
+    throw error
+  }
+}
+
+export async function clearToolsCache() {
+  console.log('🧹 清除工具缓存...')
+
+  try {
+    revalidateTag(CACHE_TAGS.TOOLS)
+    console.log('✅ 工具缓存清除完成')
+  } catch (error) {
+    console.error('❌ 清除工具缓存时出错:', error)
+    throw error
   }
 }

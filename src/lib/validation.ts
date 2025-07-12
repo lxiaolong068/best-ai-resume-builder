@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 // Tool comparison validation schema
 export const toolComparisonSchema = z.object({
-  toolIds: z.array(z.string().uuid()).min(1).max(5),
+  toolIds: z.array(z.string().min(1)).min(1).max(5), // Accept any non-empty string ID (cuid or uuid)
   filters: z.object({
     atsOptimized: z.boolean().optional(),
     pricingModel: z.enum(['free', 'freemium', 'subscription']).optional(),

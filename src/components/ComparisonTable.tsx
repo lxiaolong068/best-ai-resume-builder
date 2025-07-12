@@ -343,6 +343,7 @@ export function ComparisonTable() {
             {filteredTools.map((tool) => (
               <button
                 key={tool.id}
+                data-testid="tool-card"
                 onClick={() => toggleTool(tool.id)}
                 disabled={!selectedTools.includes(tool.id) && selectedTools.length >= 5}
                 className={`flex items-center space-x-3 p-4 rounded-lg border transition-all text-left ${
@@ -357,7 +358,7 @@ export function ComparisonTable() {
                   <span className="text-sm font-medium">{tool.name.charAt(0)}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-medium truncate">{tool.name}</div>
+                  <div className="font-medium truncate" data-testid="tool-name">{tool.name}</div>
                   <div className="text-sm text-gray-500 flex items-center space-x-2">
                     <StarIcon className="w-4 h-4 text-yellow-400" />
                     <span>{tool.rating || 'N/A'}</span>
