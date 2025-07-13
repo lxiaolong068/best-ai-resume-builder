@@ -352,6 +352,228 @@ export const reviewQueries = {
   },
 }
 
+// Type-safe AI generation queries
+export const aiQueries = {
+  // Track AI generation usage
+  async trackAIGeneration(data: {
+    userSessionId: string
+    generationType: string
+    inputText: string
+    generatedContent: string
+    modelUsed: string
+    tokensUsed: number
+    generationTimeMs: number
+    estimatedCost: number
+  }) {
+    return prisma.aiGeneration.create({
+      data
+    })
+  },
+
+  // Get AI usage statistics for a session
+  async getSessionUsage(sessionId: string) {
+    const [
+      totalGenerations,
+      totalTokens,
+      totalCost,
+      recentGenerations
+    ] = await Promise.all([
+      prisma.aiGeneration.count({
+        where: { userSessionId: sessionId }
+      }),
+      prisma.aiGeneration.aggregate({
+        where: { userSessionId: sessionId },
+        _sum: { tokensUsed: true, estimatedCost: true }
+      }),
+      prisma.aiGeneration.aggregate({
+        where: {
+          userSessionId: sessionId,
+          createdAt: {
+            gte: new Date(Date.now() - 24 * 60 * 60 * 1000) // Last 24 hours
+          }
+        },
+        _sum: { tokensUsed: true, estimatedCost: true }
+      }),
+      prisma.aiGeneration.findMany({
+        where: { userSessionId: sessionId },
+        orderBy: { createdAt: 'desc' },
+        take: 10
+      })
+    ])
+
+    return {
+      totalGenerations,
+      totalTokens: totalTokens._sum.tokensUsed || 0,
+      totalCost: totalCost._sum.estimatedCost || 0,
+      dailyTokens: totalCost._sum.tokensUsed || 0,
+      dailyCost: totalCost._sum.estimatedCost || 0,
+      recentGenerations
+    }
+  },
+
+  // Get global usage statistics
+  async getGlobalUsage(timeframe: '24h' | '7d' | '30d' = '24h') {
+    const hours = timeframe === '24h' ? 24 : timeframe === '7d' ? 168 : 720
+    const since = new Date(Date.now() - hours * 60 * 60 * 1000)
+
+    const [
+      totalGenerations,
+      totalUsage,
+      topModels,
+      avgResponseTime
+    ] = await Promise.all([
+      prisma.aiGeneration.count({
+        where: { createdAt: { gte: since } }
+      }),
+      prisma.aiGeneration.aggregate({
+        where: { createdAt: { gte: since } },
+        _sum: { tokensUsed: true, estimatedCost: true },
+        _avg: { generationTimeMs: true }
+      }),
+      prisma.aiGeneration.groupBy({
+        by: ['modelUsed'],
+        where: { createdAt: { gte: since } },
+        _count: { _all: true },
+        _sum: { tokensUsed: true, estimatedCost: true },
+        orderBy: { _count: { modelUsed: 'desc' } },
+        take: 5
+      }),
+      prisma.aiGeneration.aggregate({
+        where: { createdAt: { gte: since } },
+        _avg: { generationTimeMs: true }
+      })
+    ])
+
+    return {
+      timeframe,
+      totalGenerations,
+      totalTokens: totalUsage._sum.tokensUsed || 0,
+      totalCost: totalUsage._sum.estimatedCost || 0,
+      avgResponseTime: avgResponseTime._avg.generationTimeMs || 0,
+      topModels
+    }
+  },
+
+  // Track AI analysis
+  async trackAIAnalysis(data: {
+    userSessionId: string
+    resumeText: string
+    targetRole?: string
+    analysisType: string
+    aiScore: number
+    ruleScore: number
+    combinedScore: number
+    aiSuggestions: any
+    improvementAreas: any
+    modelUsed?: string
+    responseTimeMs: number
+  }) {
+    return prisma.aiAnalysis.create({
+      data
+    })
+  },
+
+  // Get user AI preferences
+  async getUserAIPreferences(sessionId: string) {
+    return prisma.userAiPreferences.findUnique({
+      where: { sessionId }
+    })
+  },
+
+  // Update user AI preferences
+  async updateUserAIPreferences(sessionId: string, preferences: {
+    preferredAiModel?: string
+    targetIndustries?: string[]
+    careerLevel?: string
+    optimizationGoals?: any
+    budgetTier?: string
+  }) {
+    return prisma.userAiPreferences.upsert({
+      where: { sessionId },
+      update: {
+        ...preferences,
+        updatedAt: new Date()
+      },
+      create: {
+        sessionId,
+        ...preferences
+      }
+    })
+  },
+
+  // Get AI analysis history for session
+  async getAnalysisHistory(sessionId: string, limit: number = 10) {
+    return prisma.aiAnalysis.findMany({
+      where: { userSessionId: sessionId },
+      orderBy: { createdAt: 'desc' },
+      take: limit
+    })
+  },
+
+  // Get cost summary for budget management
+  async getCostSummary(sessionId: string, period: 'daily' | 'monthly' = 'daily') {
+    const now = new Date()
+    const startDate = period === 'daily' 
+      ? new Date(now.getFullYear(), now.getMonth(), now.getDate())
+      : new Date(now.getFullYear(), now.getMonth(), 1)
+
+    return prisma.aiGeneration.aggregate({
+      where: {
+        userSessionId: sessionId,
+        createdAt: { gte: startDate }
+      },
+      _sum: {
+        tokensUsed: true,
+        estimatedCost: true
+      },
+      _count: { _all: true }
+    })
+  },
+
+  // Get model performance metrics
+  async getModelPerformance(modelName?: string, timeframe: '24h' | '7d' | '30d' = '24h') {
+    const hours = timeframe === '24h' ? 24 : timeframe === '7d' ? 168 : 720
+    const since = new Date(Date.now() - hours * 60 * 60 * 1000)
+
+    const whereClause: any = { createdAt: { gte: since } }
+    if (modelName) {
+      whereClause.modelUsed = modelName
+    }
+
+    return prisma.aiGeneration.aggregate({
+      where: whereClause,
+      _avg: {
+        generationTimeMs: true,
+        estimatedCost: true
+      },
+      _sum: {
+        tokensUsed: true,
+        estimatedCost: true
+      },
+      _count: { _all: true }
+    })
+  },
+
+  // Clean up old AI data (for maintenance)
+  async cleanupOldData(daysToKeep: number = 90) {
+    const cutoffDate = new Date(Date.now() - daysToKeep * 24 * 60 * 60 * 1000)
+    
+    const [deletedGenerations, deletedAnalyses] = await Promise.all([
+      prisma.aiGeneration.deleteMany({
+        where: { createdAt: { lt: cutoffDate } }
+      }),
+      prisma.aiAnalysis.deleteMany({
+        where: { createdAt: { lt: cutoffDate } }
+      })
+    ])
+
+    return {
+      deletedGenerations: deletedGenerations.count,
+      deletedAnalyses: deletedAnalyses.count
+    }
+  }
+}
+
 // Type-safe utility functions
 export const dbUtils = {
   // Build where clause from filters

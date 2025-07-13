@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { 
+import {
   DocumentTextIcon,
   ChartBarIcon,
   CheckCircleIcon,
@@ -9,7 +9,8 @@ import {
   LightBulbIcon,
   ArrowPathIcon,
   ShareIcon,
-  EnvelopeIcon
+  EnvelopeIcon,
+  SparklesIcon
 } from '@heroicons/react/24/outline'
 import { StarIcon } from '@heroicons/react/24/solid'
 
@@ -43,6 +44,13 @@ interface ATSAnalysisResult {
     criticalIssues: string[]
     quickWins: string[]
   }
+  aiEnhanced?: boolean
+  aiInsights?: {
+    score: number
+    suggestions: string[]
+    optimizedContent: string
+    keywords: string[]
+  }
 }
 
 
@@ -54,6 +62,7 @@ export function ATSAnalyzerPage() {
   const [analysis, setAnalysis] = useState<ATSAnalysisResult | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [useAI, setUseAI] = useState(true)
 
   const industries = [
     { value: '', label: 'Select Industry (Optional)' },
@@ -80,7 +89,8 @@ export function ATSAnalyzerPage() {
     setError('')
 
     try {
-      const response = await fetch('/api/ats-analyzer', {
+      const apiEndpoint = useAI ? '/api/ai/analyze-resume' : '/api/ats-analyzer'
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +99,8 @@ export function ATSAnalyzerPage() {
         body: JSON.stringify({
           resumeText,
           targetIndustry: targetIndustry || undefined,
-          email: email || undefined
+          email: email || undefined,
+          useAI
         }),
       })
 
@@ -217,6 +228,27 @@ export function ATSAnalyzerPage() {
               </h2>
               
               <div className="space-y-6">
+                {/* AI Enhancement Toggle */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-sm font-medium text-blue-900">AI增强分析</h3>
+                      <p className="text-xs text-blue-700 mt-1">
+                        启用AI功能获得更深入的分析和个性化建议
+                      </p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={useAI}
+                        onChange={(e) => setUseAI(e.target.checked)}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                  </div>
+                </div>
+
                 {/* Resume Text Input */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -362,6 +394,66 @@ export function ATSAnalyzerPage() {
                       </div>
                     ))}
                   </div>
+
+                  {/* AI Insights */}
+                  {analysis.aiEnhanced && analysis.aiInsights && (
+                    <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6">
+                      <div className="flex items-center mb-4">
+                        <SparklesIcon className="h-6 w-6 text-blue-600 mr-2" />
+                        <h4 className="text-lg font-semibold text-gray-900">AI深度洞察</h4>
+                        <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                          AI增强
+                        </span>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <h5 className="text-sm font-medium text-gray-700 mb-2">AI评分</h5>
+                          <div className="flex items-center">
+                            <div className="w-full bg-gray-200 rounded-full h-2 mr-3">
+                              <div
+                                className={`h-2 rounded-full ${getScoreBgColor(analysis.aiInsights.score)}`}
+                                style={{ width: `${analysis.aiInsights.score}%` }}
+                              />
+                            </div>
+                            <span className={`text-sm font-medium ${getScoreColor(analysis.aiInsights.score)}`}>
+                              {analysis.aiInsights.score}
+                            </span>
+                          </div>
+                        </div>
+
+                        {analysis.aiInsights.suggestions.length > 0 && (
+                          <div>
+                            <h5 className="text-sm font-medium text-gray-700 mb-2">AI建议</h5>
+                            <ul className="space-y-1">
+                              {analysis.aiInsights.suggestions.slice(0, 3).map((suggestion, index) => (
+                                <li key={index} className="text-sm text-gray-600 flex items-start">
+                                  <LightBulbIcon className="h-4 w-4 text-yellow-500 mr-2 mt-0.5 flex-shrink-0" />
+                                  {suggestion}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {analysis.aiInsights.keywords.length > 0 && (
+                          <div>
+                            <h5 className="text-sm font-medium text-gray-700 mb-2">AI推荐关键词</h5>
+                            <div className="flex flex-wrap gap-2">
+                              {analysis.aiInsights.keywords.slice(0, 8).map((keyword, index) => (
+                                <span
+                                  key={index}
+                                  className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                                >
+                                  {keyword}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Share Button */}
                   <button

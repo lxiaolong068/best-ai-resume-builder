@@ -1,4 +1,6 @@
 // ATS Resume Analyzer - Free tool for analyzing resume ATS compatibility
+import { AIResumeService, AIAnalysisResult } from './ai-services'
+import { AICostManager } from './ai-cost-management'
 
 export interface ATSAnalysisResult {
   overallScore: number
@@ -29,6 +31,13 @@ export interface ATSAnalysisResult {
     strengths: string[]
     criticalIssues: string[]
     quickWins: string[]
+  }
+  aiEnhanced?: boolean
+  aiInsights?: {
+    score: number
+    suggestions: string[]
+    optimizedContent: string
+    keywords: string[]
   }
 }
 
@@ -380,5 +389,119 @@ function generateSummary(sections: any, overallScore: number) {
     strengths,
     criticalIssues,
     quickWins
+  }
+}
+
+// AI增强的ATS分析功能
+export async function analyzeResumeATSWithAI(
+  resumeText: string,
+  targetIndustry?: string,
+  sessionId?: string,
+  model?: string
+): Promise<ATSAnalysisResult> {
+  // 首先进行基于规则的分析
+  const ruleBasedAnalysis = analyzeResumeATS(resumeText, targetIndustry)
+
+  try {
+    // 检查AI使用配额
+    const costManager = new AICostManager()
+    const quota = await costManager.checkUsageQuota(sessionId || 'anonymous')
+
+    if (!quota.canProceed) {
+      console.warn('AI quota exceeded, falling back to rule-based analysis')
+      return ruleBasedAnalysis
+    }
+
+    // 进行AI分析
+    const aiService = new AIResumeService()
+    const startTime = Date.now()
+
+    const aiAnalysis = await aiService.analyzeResume(
+      resumeText,
+      targetIndustry,
+      model || quota.recommendedModel
+    )
+
+    const responseTime = Date.now() - startTime
+
+    // 记录AI使用情况
+    const estimatedCost = await aiService.estimateCost(
+      `Analyze resume for ${targetIndustry || 'general'} position: ${resumeText}`,
+      JSON.stringify(aiAnalysis),
+      model || quota.recommendedModel || process.env.AI_MODEL_NAME || 'anthropic/claude-3.5-sonnet'
+    )
+
+    await costManager.trackUsage(
+      sessionId || 'anonymous',
+      'ats_analysis',
+      resumeText,
+      JSON.stringify(aiAnalysis),
+      model || quota.recommendedModel || process.env.AI_MODEL_NAME || 'anthropic/claude-3.5-sonnet',
+      aiService.estimateTokens(resumeText + JSON.stringify(aiAnalysis)),
+      responseTime,
+      estimatedCost
+    )
+
+    // 合并分析结果
+    return mergeAnalysisResults(ruleBasedAnalysis, aiAnalysis)
+  } catch (error) {
+    console.error('AI analysis failed, falling back to rule-based analysis:', error)
+    return ruleBasedAnalysis
+  }
+}
+
+// 合并规则分析和AI分析结果
+function mergeAnalysisResults(
+  ruleBasedResult: ATSAnalysisResult,
+  aiResult: AIAnalysisResult
+): ATSAnalysisResult {
+  // 计算综合评分（规则分析权重60%，AI分析权重40%）
+  const combinedScore = Math.round(
+    (ruleBasedResult.overallScore * 0.6) + (aiResult.score * 0.4)
+  )
+
+  return {
+    overallScore: combinedScore,
+    sections: {
+      formatting: ruleBasedResult.sections.formatting,
+      content: {
+        ...ruleBasedResult.sections.content,
+        recommendations: [
+          ...ruleBasedResult.sections.content.recommendations,
+          ...aiResult.suggestions.slice(0, 3) // 添加前3个AI建议
+        ]
+      },
+      keywords: {
+        ...ruleBasedResult.sections.keywords,
+        suggestedKeywords: [
+          ...ruleBasedResult.sections.keywords.suggestedKeywords,
+          ...aiResult.keywords.filter(keyword =>
+            !ruleBasedResult.sections.keywords.suggestedKeywords.includes(keyword)
+          )
+        ]
+      },
+      structure: ruleBasedResult.sections.structure
+    },
+    summary: {
+      strengths: [
+        ...ruleBasedResult.summary.strengths,
+        ...(aiResult.atsCompatibility.score > 80 ? ['AI分析显示良好的ATS兼容性'] : [])
+      ],
+      criticalIssues: [
+        ...ruleBasedResult.summary.criticalIssues,
+        ...aiResult.atsCompatibility.issues.slice(0, 2) // 添加前2个AI发现的问题
+      ],
+      quickWins: [
+        ...ruleBasedResult.summary.quickWins,
+        ...aiResult.atsCompatibility.improvements.slice(0, 2) // 添加前2个AI改进建议
+      ]
+    },
+    aiEnhanced: true,
+    aiInsights: {
+      score: aiResult.score,
+      suggestions: aiResult.suggestions,
+      optimizedContent: aiResult.optimizedContent,
+      keywords: aiResult.keywords
+    }
   }
 }

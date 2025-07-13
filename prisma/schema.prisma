@@ -103,6 +103,54 @@ model EmailSubscriber {
   tags        String[]
   active      Boolean  @default(true)
   subscribedAt DateTime @default(now()) @map("subscribed_at")
-  
+
   @@map("email_subscribers")
+}
+
+model AiGeneration {
+  id                String   @id @default(cuid())
+  userSessionId     String   @map("user_session_id")
+  generationType    String   @map("generation_type") // 'resume_section', 'optimization', 'analysis'
+  inputText         String   @map("input_text")
+  generatedContent  String   @map("generated_content")
+  modelUsed         String   @map("model_used")
+  tokensUsed        Int      @map("tokens_used")
+  generationTimeMs  Int      @map("generation_time_ms")
+  estimatedCost     Decimal  @default(0) @db.Decimal(10, 6) @map("estimated_cost")
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  @@map("ai_generations")
+}
+
+model AiAnalysis {
+  id             String   @id @default(cuid())
+  userSessionId  String   @map("user_session_id")
+  resumeText     String   @map("resume_text")
+  targetRole     String?  @map("target_role")
+  analysisType   String   @map("analysis_type") // 'ats_compatibility', 'job_match', 'industry_fit'
+  aiScore        Int      @map("ai_score")
+  ruleScore      Int      @map("rule_score")
+  combinedScore  Int      @map("combined_score")
+  aiSuggestions  Json     @map("ai_suggestions")
+  improvementAreas Json   @map("improvement_areas")
+  modelUsed      String?  @map("model_used")
+  responseTimeMs Int      @default(0) @map("response_time_ms")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("ai_analyses")
+}
+
+model UserAiPreferences {
+  id                String   @id @default(cuid())
+  sessionId         String   @map("session_id")
+  preferredAiModel  String?  @map("preferred_ai_model")
+  targetIndustries  String[] @map("target_industries")
+  careerLevel       String?  @map("career_level") // 'entry', 'mid', 'senior', 'executive'
+  optimizationGoals Json?    @map("optimization_goals")
+  budgetTier        String   @default("medium") @map("budget_tier") // 'low', 'medium', 'high'
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@unique([sessionId])
+  @@map("user_ai_preferences")
 }
