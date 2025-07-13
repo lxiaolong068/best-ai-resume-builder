@@ -60,10 +60,10 @@ export async function GET(request: NextRequest) {
     const queryParams = Object.fromEntries(searchParams.entries())
 
     // Validate query parameters
-    const validation = validateRequest(eventsQuerySchema, queryParams)
+    const validation = eventsQuerySchema.safeParse(queryParams)
     if (!validation.success) {
       return NextResponse.json(
-        { success: false, error: validation.error },
+        { success: false, error: 'Invalid query parameters' },
         { status: 400 }
       )
     }

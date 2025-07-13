@@ -44,8 +44,8 @@ export const toolSchema = z.object({
 
 // API query parameters validation
 export const toolsQuerySchema = z.object({
-  page: z.string().regex(/^\d+$/).transform(Number).optional(),
-  limit: z.string().regex(/^\d+$/).transform(Number).optional(),
+  page: z.string().optional().transform((val) => val ? Number(val) : undefined),
+  limit: z.string().optional().transform((val) => val ? Number(val) : undefined),
   sortBy: z.enum(['rating', 'name', 'createdAt']).optional(),
   sortOrder: z.enum(['asc', 'desc']).optional(),
   search: z.string().max(200).optional(),
@@ -58,8 +58,8 @@ export const eventsQuerySchema = z.object({
   startDate: z.string().datetime().optional(),
   endDate: z.string().datetime().optional(),
   eventType: z.string().max(100).optional(),
-  page: z.string().regex(/^\d+$/).transform(Number).optional(),
-  limit: z.string().regex(/^\d+$/).transform(Number).optional(),
+  page: z.string().optional().transform((val) => val ? Number(val) : undefined),
+  limit: z.string().optional().transform((val) => val ? Number(val) : undefined),
 })
 
 // Generic validation helper

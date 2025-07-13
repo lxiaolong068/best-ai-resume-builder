@@ -40,17 +40,17 @@ const envSchema = z.object({
     .default(500),
   
   // Optional Services
-  REDIS_URL: z.string().url('REDIS_URL must be a valid URL').optional(),
-  SENTRY_DSN: z.string().url('SENTRY_DSN must be a valid URL').optional(),
+  REDIS_URL: z.string().transform(val => val === '' || val.startsWith('redis://localhost') ? undefined : val).pipe(z.string().url().optional()),
+  SENTRY_DSN: z.string().transform(val => val === '' || val === 'your-sentry-dsn' ? undefined : val).pipe(z.string().url().optional()),
   
   // Environment
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   
   // NextAuth
   NEXTAUTH_SECRET: z.string()
-    .min(32, 'NEXTAUTH_SECRET must be at least 32 characters for security')
-    .optional(),
-  NEXTAUTH_URL: z.string().url('NEXTAUTH_URL must be a valid URL').optional(),
+    .transform(val => val === '' || val === 'your-secret-key' ? undefined : val)
+    .pipe(z.string().min(32, 'NEXTAUTH_SECRET must be at least 32 characters for security').optional()),
+  NEXTAUTH_URL: z.string().transform(val => val === '' ? undefined : val).pipe(z.string().url().optional()),
 })
 
 export type EnvConfig = z.infer<typeof envSchema>

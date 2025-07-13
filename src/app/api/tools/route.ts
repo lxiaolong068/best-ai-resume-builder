@@ -18,9 +18,9 @@ export const GET = withErrorHandler(async (request: NextRequest) => {
   const queryParams = Object.fromEntries(searchParams.entries())
 
   // Validate query parameters
-  const validation = validateRequest(toolsQuerySchema, queryParams)
+  const validation = toolsQuerySchema.safeParse(queryParams)
   if (!validation.success) {
-    return createValidationError(validation.error)
+    return createValidationError('Invalid query parameters')
   }
 
     // Extract validated parameters with defaults
